@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type CSSProperties, useEffect, useState } from 'react';
 
@@ -27,10 +28,9 @@ export function PortfolioControls() {
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // Idle background prewarming of AI Mode route and media
+    // Idle background prewarming of avatar video in browser cache
     const prewarmAiMode = () => {
       router.prefetch('/chat');
-      // Low-priority prewarm of avatar video in browser cache
       try {
         if ('fetch' in window) {
           fetch('/final_memojis_ios.mp4', { priority: 'low' as RequestPriority }).catch(() => {});
@@ -39,13 +39,13 @@ export function PortfolioControls() {
     };
 
     if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      const idleId = window.requestIdleCallback(prewarmAiMode, { timeout: 2000 });
+      const idleId = window.requestIdleCallback(prewarmAiMode, { timeout: 1500 });
       return () => {
         window.removeEventListener('scroll', onScroll);
         window.cancelIdleCallback(idleId);
       };
     } else {
-      const timer = setTimeout(prewarmAiMode, 800);
+      const timer = setTimeout(prewarmAiMode, 500);
       return () => {
         window.removeEventListener('scroll', onScroll);
         clearTimeout(timer);
@@ -68,27 +68,18 @@ export function PortfolioControls() {
     }
   };
 
-  const enterAiMode = () => {
-    router.push('/chat');
-  };
-
-  const prepareAiMode = () => router.prefetch('/chat');
-
   return (
     <>
       <div className="portfolio-controls" aria-label="Portfolio controls">
-        <button
-          type="button"
-          onClick={enterAiMode}
-          onPointerEnter={prepareAiMode}
-          onFocus={prepareAiMode}
-          onTouchStart={prepareAiMode}
+        <Link
+          href="/chat"
+          prefetch={true}
           className="mode-switch active:scale-95 transition-transform"
           aria-label="Switch to AI portfolio"
         >
           <LocalIcon src="/icons/bot.svg" />
           <span>AI mode</span>
-        </button>
+        </Link>
         <button
           type="button"
           onClick={toggleTheme}

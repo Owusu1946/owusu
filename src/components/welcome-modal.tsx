@@ -42,11 +42,9 @@ export default function WelcomeModal({ trigger }: WelcomeModalProps) {
     </Button>
   );
 
-  // Function using window.location for full reload
   const handleContactMe = () => {
     setIsOpen(false);
-    // Force a full page reload with the request
-    window.location.href = '/chat?query=How%20can%20I%20contact%20you%3F';
+    router.push('/chat?query=How%20can%20I%20contact%20you%3F');
   };
 
   return (

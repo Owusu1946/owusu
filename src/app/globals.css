@@ -869,11 +869,13 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
 }
 
 .portfolio-controls button,
+.portfolio-controls a,
 .scroll-control {
   border: 1px solid var(--portfolio-border);
   background: color-mix(in srgb, var(--portfolio-bg) 88%, transparent);
   color: var(--portfolio-secondary);
   backdrop-filter: blur(12px);
+  text-decoration: none;
 }
 
 .mode-switch {
