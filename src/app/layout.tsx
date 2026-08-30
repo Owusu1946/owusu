@@ -82,6 +82,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <link rel="prefetch" href="/final_memojis_ios.mp4" as="video" type="video/mp4" />
       </head>
       <body>{children}</body>
     </html>

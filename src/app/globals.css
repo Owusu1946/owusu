@@ -953,42 +953,13 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
   transform: translateY(0);
 }
 
-.ai-transition {
-  position: fixed;
-  top: 2.2rem;
-  right: 5.5rem;
-  z-index: 100;
-  display: flex;
-  width: 1px;
-  height: 1px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: #ffffff;
-  color: #171717;
-  pointer-events: none;
-  transform: scale(0);
-  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.ai-transition svg,
-.ai-transition .local-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  opacity: 0;
-}
-
-.ai-transition.is-active {
-  transform: scale(4200);
-}
-
 .chat-route-loading {
   position: relative;
   width: 100%;
   min-height: 100dvh;
   overflow: hidden;
-  background: #ffffff;
-  color: #171717;
+  background: var(--portfolio-bg);
+  color: var(--portfolio-primary);
 }
 
 .chat-loading-header {
@@ -1002,8 +973,8 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
   padding-top: 1.5rem;
   background: linear-gradient(
     to bottom,
-    rgb(255 255 255) 0%,
-    rgb(255 255 255 / 92%) 58%,
+    var(--chat-gradient-start) 0%,
+    var(--chat-gradient-mid) 58%,
     transparent 100%
   );
 }
@@ -1011,9 +982,9 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
 .chat-loading-avatar {
   width: 5.75rem;
   height: 5.75rem;
-  border: 1px solid #e7e7e7;
+  border: 1px solid var(--portfolio-border);
   border-radius: 50%;
-  background: #f4f4f5;
+  background: var(--portfolio-bg-soft);
   animation: chat-loading-pulse 1.2s ease-in-out infinite alternate;
 }
 
@@ -1030,7 +1001,7 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
 .chat-loading-center span {
   height: 0.8rem;
   border-radius: 3px;
-  background: #f0f0f1;
+  background: var(--portfolio-bg-soft);
   animation: chat-loading-pulse 1.2s ease-in-out infinite alternate;
 }
 

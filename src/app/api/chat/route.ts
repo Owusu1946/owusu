@@ -12,6 +12,7 @@ import { getResume } from './tools/getResume';
 import { getSkills } from './tools/getSkills';
 import { getSports } from './tools/getSport';
 
+export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
 // Internal error handler helper

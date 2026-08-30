@@ -17,15 +17,41 @@ export function PortfolioControls() {
   const router = useRouter();
   const [dark, setDark] = useState(true);
   const [scrolled, setScrolled] = useState(false);
-  const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
-    setDark(document.documentElement.classList.contains('portfolio-dark') || document.documentElement.classList.contains('dark'));
+    setDark(
+      document.documentElement.classList.contains('portfolio-dark') ||
+        document.documentElement.classList.contains('dark')
+    );
     const onScroll = () => setScrolled(window.scrollY > 300);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+
+    // Idle background prewarming of AI Mode route and media
+    const prewarmAiMode = () => {
+      router.prefetch('/chat');
+      // Low-priority prewarm of avatar video in browser cache
+      try {
+        if ('fetch' in window) {
+          fetch('/final_memojis_ios.mp4', { priority: 'low' as RequestPriority }).catch(() => {});
+        }
+      } catch (_) {}
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(prewarmAiMode, { timeout: 2000 });
+      return () => {
+        window.removeEventListener('scroll', onScroll);
+        window.cancelIdleCallback(idleId);
+      };
+    } else {
+      const timer = setTimeout(prewarmAiMode, 800);
+      return () => {
+        window.removeEventListener('scroll', onScroll);
+        clearTimeout(timer);
+      };
+    }
+  }, [router]);
 
   const toggleTheme = () => {
     const nextDark = !dark;
@@ -43,9 +69,7 @@ export function PortfolioControls() {
   };
 
   const enterAiMode = () => {
-    if (transitioning) return;
-    setTransitioning(true);
-    window.requestAnimationFrame(() => router.push('/chat'));
+    router.push('/chat');
   };
 
   const prepareAiMode = () => router.prefetch('/chat');
@@ -59,7 +83,7 @@ export function PortfolioControls() {
           onPointerEnter={prepareAiMode}
           onFocus={prepareAiMode}
           onTouchStart={prepareAiMode}
-          className="mode-switch"
+          className="mode-switch active:scale-95 transition-transform"
           aria-label="Switch to AI portfolio"
         >
           <LocalIcon src="/icons/bot.svg" />
@@ -86,13 +110,6 @@ export function PortfolioControls() {
       >
         <LocalIcon src="/icons/arrow-top.svg" />
       </button>
-
-      <div
-        className={`ai-transition ${transitioning ? 'is-active' : ''}`}
-        aria-hidden="true"
-      >
-        <LocalIcon src="/icons/bot.svg" />
-      </div>
     </>
   );
 }
