@@ -309,11 +309,11 @@ const Chat = () => {
     !currentAIMessage && !latestUserMessage && !loadingSubmit;
 
   // Calculate header height based on hasActiveTool
-  const headerHeight = hasActiveTool ? 100 : 180;
+  const headerHeight = hasActiveTool ? 90 : 170;
 
   return (
-    <div className="relative h-screen overflow-hidden bg-[var(--portfolio-bg)] text-[var(--portfolio-primary)] transition-colors duration-200">
-      <div className="absolute top-6 right-8 z-51 flex items-center justify-center gap-2">
+    <div className="fixed inset-0 h-[100dvh] max-h-[100dvh] min-h-[100dvh] w-full overflow-hidden bg-[var(--portfolio-bg)] text-[var(--portfolio-primary)] transition-colors duration-200">
+      <div className="absolute top-[max(0.75rem,env(safe-area-inset-top))] right-4 sm:right-8 z-51 flex items-center justify-center gap-2">
         <GithubButton
           repoUrl={profile.repo}
           label="Star"
@@ -346,14 +346,14 @@ const Chat = () => {
 
       {/* Fixed Avatar Header with Gradient */}
       <div
-        className="fixed top-0 right-0 left-0 z-50 transition-colors duration-200"
+        className="fixed top-0 right-0 left-0 z-50 pt-[env(safe-area-inset-top,0px)] transition-colors duration-200"
         style={{
           background:
             'linear-gradient(to bottom, var(--chat-gradient-start) 0%, var(--chat-gradient-mid) 30%, var(--chat-gradient-sub) 50%, var(--chat-gradient-end) 100%)',
         }}
       >
         <div
-          className={`transition-all duration-300 ease-in-out ${hasActiveTool ? 'pt-6 pb-0' : 'py-6'}`}
+          className={`transition-all duration-300 ease-in-out ${hasActiveTool ? 'pt-4 pb-0 sm:pt-6' : 'py-4 sm:py-6'}`}
         >
           <div className="flex justify-center">
             <ClientOnly>
@@ -391,14 +391,14 @@ const Chat = () => {
       <div className="container mx-auto flex h-full max-w-3xl flex-col">
         {/* Scrollable Chat Content */}
         <div
-          className="chat-thread-scroll flex-1 overflow-y-auto px-2"
-          style={{ paddingTop: `${headerHeight}px` }}
+          className="chat-thread-scroll flex-1 overflow-y-auto px-2 pb-6"
+          style={{ paddingTop: `calc(${headerHeight}px + env(safe-area-inset-top, 0px))` }}
         >
           <AnimatePresence mode="wait">
             {isEmptyState ? (
               <motion.div
                 key="landing"
-                className="flex min-h-full items-center justify-center"
+                className="flex min-h-full items-center justify-center pb-20"
                 {...MOTION_CONFIG}
               >
                 <ChatLanding
@@ -406,7 +406,7 @@ const Chat = () => {
                 />
               </motion.div>
             ) : currentAIMessage ? (
-              <div className="pb-4">
+              <div className="pb-24 sm:pb-32">
                 <SimplifiedChatView
                   message={currentAIMessage}
                   isLoading={isLoading}
@@ -419,7 +419,7 @@ const Chat = () => {
                 <motion.div
                   key="loading"
                   {...MOTION_CONFIG}
-                  className="px-4 pt-18"
+                  className="px-4 pt-18 pb-20"
                 >
                   <ChatBubble variant="received">
                     <ChatBubbleMessage isLoading />
@@ -431,7 +431,7 @@ const Chat = () => {
         </div>
 
         {/* Fixed Bottom Bar */}
-        <div className="sticky bottom-0 bg-[var(--portfolio-bg)] px-2 pt-3 md:px-0 md:pb-4 transition-colors duration-200">
+        <div className="sticky bottom-0 z-40 w-full bg-[var(--portfolio-bg)] px-3 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:px-0 md:pb-4 transition-colors duration-200">
           <motion.div
             layout
             className="relative flex flex-col items-center gap-3"

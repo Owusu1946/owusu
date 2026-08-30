@@ -124,15 +124,14 @@ export function Hobbies() {
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-1.5 rounded-full border border-border bg-secondary/50 p-1 backdrop-blur-md">
+        <div className="flex max-w-full items-center gap-1.5 overflow-x-auto rounded-full border border-border bg-secondary/50 p-1 backdrop-blur-md no-scrollbar">
           <button
             type="button"
             onClick={() => setActiveTab('music')}
-            className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
-              activeTab === 'music'
+            className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 sm:px-3.5 py-1.5 text-xs font-medium transition-all ${activeTab === 'music'
                 ? 'bg-foreground text-background shadow-xs'
                 : 'text-muted-foreground hover:text-foreground'
-            }`}
+              }`}
           >
             <MusicIcon className="h-3.5 w-3.5" />
             <span>Music</span>
@@ -141,11 +140,10 @@ export function Hobbies() {
           <button
             type="button"
             onClick={() => setActiveTab('poems')}
-            className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
-              activeTab === 'poems'
+            className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 sm:px-3.5 py-1.5 text-xs font-medium transition-all ${activeTab === 'poems'
                 ? 'bg-foreground text-background shadow-xs'
                 : 'text-muted-foreground hover:text-foreground'
-            }`}
+              }`}
           >
             <PenIcon className="h-3.5 w-3.5" />
             <span>Poetry</span>
@@ -154,11 +152,10 @@ export function Hobbies() {
           <button
             type="button"
             onClick={() => setActiveTab('reading')}
-            className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
-              activeTab === 'reading'
+            className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 sm:px-3.5 py-1.5 text-xs font-medium transition-all ${activeTab === 'reading'
                 ? 'bg-foreground text-background shadow-xs'
                 : 'text-muted-foreground hover:text-foreground'
-            }`}
+              }`}
           >
             <BookIcon className="h-3.5 w-3.5" />
             <span>Reading</span>
@@ -167,14 +164,13 @@ export function Hobbies() {
           <button
             type="button"
             onClick={() => setActiveTab('fitness')}
-            className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
-              activeTab === 'fitness'
+            className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 sm:px-3.5 py-1.5 text-xs font-medium transition-all ${activeTab === 'fitness'
                 ? 'bg-foreground text-background shadow-xs'
                 : 'text-muted-foreground hover:text-foreground'
-            }`}
+              }`}
           >
             <ActivityIcon className="h-3.5 w-3.5" />
-            <span>Life &amp; Sport</span>
+            <span>Lifestyle</span>
           </button>
         </div>
       </div>
@@ -252,8 +248,8 @@ export function Hobbies() {
                             animate={
                               isPlaying
                                 ? {
-                                    scaleY: [scale, 1, 0.2, scale],
-                                  }
+                                  scaleY: [scale, 1, 0.2, scale],
+                                }
                                 : { scaleY: 0.3 }
                             }
                             transition={{
@@ -342,11 +338,10 @@ export function Hobbies() {
                         key={poem.id}
                         type="button"
                         onClick={() => setSelectedPoemIndex(index)}
-                        className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-colors cursor-pointer ${
-                          selectedPoemIndex === index
+                        className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-colors cursor-pointer ${selectedPoemIndex === index
                             ? 'bg-[#E5C158] text-neutral-950 font-semibold'
                             : 'text-neutral-600 hover:bg-black/5 dark:text-neutral-400 dark:hover:bg-white/5'
-                        }`}
+                          }`}
                       >
                         Note {index + 1}
                       </button>
