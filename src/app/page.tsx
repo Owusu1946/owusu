@@ -66,7 +66,7 @@ export default function Home() {
             </a>
             <a href={profile.twitter} target="_blank" rel="noopener noreferrer" title="X (Twitter)">
               <XTwitter aria-hidden="true" />
-              X
+              X(Twitter)
             </a>
             <a href={profile.instagram} target="_blank" rel="noopener noreferrer" title="Instagram">
               <Instagram aria-hidden="true" />

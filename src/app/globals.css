@@ -804,8 +804,10 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
 
 .post-content a {
   color: var(--portfolio-primary);
+  font-weight: 700;
+  text-decoration: underline;
   text-decoration-color: var(--portfolio-accent);
-  text-decoration-thickness: 1px;
+  text-decoration-thickness: 1.5px;
   text-underline-offset: 0.2em;
 }
 
