@@ -1,0 +1,189 @@
+---
+title: "Modern AI Infrastructure Is More Than an API Call"
+description: "A systems-level guide to building reliable, observable, secure, and cost-efficient AI applications beyond the prototype stage."
+date: "2026-08-30"
+published: true
+---
+
+Modern AI products often begin with a deceptively small piece of code: send a prompt to a model and display the response. That is a useful prototype, but it is not yet a dependable system.
+
+[Andrej Karpathy's "Software 2.0"](https://karpathy.medium.com/software-2-0-a64152b37c35) described a shift from explicitly programmed behavior toward systems shaped by data and learned models. That shift changes the application boundary. The model is important, but the product is defined by everything around it: context, routing, validation, tools, observability, evaluation, security, and cost control.
+
+The difficult part of production AI is rarely making the first model call. It is making the ten-thousandth call predictable.
+
+## The model is one component in a larger system
+
+A useful mental model for an AI request is:
+
+```text
+request
+  -> policy and authentication
+  -> context assembly
+  -> model routing
+  -> generation or tool execution
+  -> validation
+  -> response
+  -> tracing and evaluation
+```
+
+Each stage has a different failure mode. Authentication can reject a valid user. Retrieval can return irrelevant documents. A model can produce plausible but incorrect output. A tool can time out after performing a side effect. A response can be correct but too slow or too expensive to serve at scale.
+
+This is why established distributed-systems thinking still matters. [Martin Kleppmann's _Designing Data-Intensive Applications_](https://dataintensive.net/) and Google's freely available [Site Reliability Engineering book](https://sre.google/sre-book/table-of-contents/) were not written specifically for LLM applications, but their lessons about reliability, failure isolation, observability, and data integrity apply directly.
+
+## Route by capability, not hype
+
+No single model is the best choice for every request. Classification, extraction, coding, long-context synthesis, and conversational support have different latency, quality, and cost requirements.
+
+A practical routing layer can consider:
+
+- task type and complexity
+- context-window requirements
+- structured-output reliability
+- tool-use support
+- latency budget
+- provider health
+- regional or privacy constraints
+- cost per successful task
+
+The important metric is not cost per token. It is cost per successful outcome. A cheaper model that needs three retries may cost more than a stronger model that succeeds once.
+
+Platforms such as [OpenRouter](https://openrouter.ai/docs) make it easier to access multiple model providers through one interface, but provider abstraction is only the beginning. The application still needs explicit timeout budgets, bounded retries, circuit breakers, and fallbacks that preserve the expected response shape.
+
+Retries also require care. Repeating a text-generation request is usually harmless. Repeating a tool call that sends an email, charges a card, or changes a database record is not. Side-effecting tools need idempotency keys and clear execution records.
+
+## Context management is a data-engineering problem
+
+Sending an entire conversation on every request is simple, but it becomes slower, more expensive, and less focused as the conversation grows.
+
+Production context should be assembled deliberately from separate layers:
+
+1. Stable system and product instructions
+2. The user's current request
+3. Recent conversation turns
+4. Retrieved information relevant to the task
+5. A compact summary of older history
+6. Tool results required for the next decision
+
+More context does not automatically produce better answers. Irrelevant context can distract the model, introduce contradictions, and increase latency. Retrieval therefore needs the same discipline as any search system: good chunking, metadata filters, permission checks, freshness rules, reranking, and measurable relevance.
+
+[Chip Huyen's work on AI engineering](https://www.oreilly.com/library/view/ai-engineering/9781098166298/) is useful here because it treats model behavior as one part of a production engineering discipline. The goal is not to maximize the number of tokens sent to a model. The goal is to provide the smallest trustworthy context that can support the task.
+
+## Put deterministic boundaries around probabilistic output
+
+Free-form text is appropriate when the user expects prose. It is a poor interface between software components.
+
+When an application expects data, define a schema and validate it:
+
+```ts
+const resultSchema = z.object({
+  title: z.string().min(1),
+  summary: z.string().min(1),
+  confidence: z.number().min(0).max(1),
+  sources: z.array(z.string().url()),
+});
+```
+
+Validation creates a boundary between probabilistic generation and deterministic application logic. A failed parse should become a controlled state: retry with a repair instruction, fall back to another model, request clarification, or return a useful error.
+
+Tool calls need the same treatment. Every tool should have a narrow purpose, a typed input, a typed result, an authorization policy, and a clear timeout. Tools should return compact structured data rather than large unfiltered payloads that consume context and obscure failures.
+
+Anthropic's article on [building effective agents](https://www.anthropic.com/research/building-effective-agents) makes an important distinction between simple workflows and autonomous agents. Use the simplest architecture that can reliably complete the task. More autonomy introduces more states, more tool calls, and more ways to fail.
+
+## Observability must explain model behavior
+
+Traditional application monitoring answers questions such as: Did the request succeed? How long did it take? Which dependency failed?
+
+AI observability needs to answer more:
+
+- which model and provider handled the request
+- how long the first token and complete response took
+- how many input and output tokens were used
+- which context sources were included
+- which tools were called and how long they took
+- whether validation, retry, or fallback occurred
+- what the request cost
+- whether the result passed evaluation
+
+The [OpenTelemetry semantic conventions for generative AI](https://opentelemetry.io/docs/specs/semconv/gen-ai/) are a useful foundation for consistent traces and metrics. They also make it easier to change vendors without rebuilding the entire observability model.
+
+Prompt content should not be logged by default. Logs can contain personal information, private documents, credentials, or proprietary business data. Capture operational metadata first, then add sampled and redacted content only when the debugging value justifies the risk.
+
+## Evaluation is part of deployment
+
+An HTTP `200` only proves that the server returned something. It does not prove that the answer was correct, grounded, safe, or useful.
+
+A serious evaluation system combines several layers:
+
+- deterministic checks for schemas, citations, and required fields
+- task-specific tests with known expected behavior
+- regression datasets built from real failure cases
+- human review for nuanced or high-impact decisions
+- model-based judges with explicit rubrics and calibration
+- production feedback tied to the exact prompt and model version
+
+[Eugene Yan's writing on LLM application patterns](https://eugeneyan.com/writing/llm-patterns/) is a useful practical reference for grounding, evaluation, caching, and defensive design. The central habit is simple: every important failure should become a reproducible test case.
+
+Prompts, retrieval logic, model versions, and tool definitions should be versioned together. A prompt change can alter tool selection. A model upgrade can change JSON reliability. A retrieval change can improve relevance while quietly reducing citation quality. These are deployment changes and should pass a quality gate before reaching users.
+
+## Security is a system property
+
+[Simon Willison has written extensively about prompt injection](https://simonwillison.net/2022/Sep/12/prompt-injection/), including the fundamental problem of mixing instructions with untrusted data. A model cannot reliably distinguish between text it should follow and text it should merely analyze.
+
+Prompt wording alone is therefore not a security boundary.
+
+Strong AI systems enforce security outside the model:
+
+- authenticate users before retrieving private context
+- authorize every tool call independently
+- treat retrieved documents and web content as untrusted input
+- isolate secrets from prompts and tool results
+- require confirmation for high-impact actions
+- limit tool permissions and execution time
+- record auditable action histories
+- sanitize rendered model output
+
+The [OWASP Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/) provides a practical threat model, while the [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) offers a broader structure for governing AI risk. Neither replaces application-specific threat modeling, but both are better starting points than relying on a system prompt that says "ignore malicious instructions."
+
+## Performance and cost should be designed together
+
+AI latency is cumulative. A request may include retrieval, reranking, several model calls, and multiple tools before the user sees a complete answer.
+
+Measure at least:
+
+- time to first token
+- time to complete response
+- end-to-end task duration
+- input and output tokens
+- number of model and tool calls
+- cache hit rate
+- retry and fallback rate
+- cost per successful task
+
+Streaming improves perceived responsiveness, but it does not fix a slow pipeline. Parallelize independent work, keep prompts compact, avoid unnecessary agent loops, and reserve stronger models for tasks that benefit from them.
+
+Caching can help with embeddings, retrieval results, tool responses, summaries, and deterministic generations. Cache keys must include the inputs that affect correctness, including user permissions, model version, prompt version, and data freshness. A fast response is still wrong if it is stale or belongs to another user.
+
+## A practical production baseline
+
+Before calling an AI feature production-ready, I would expect it to have:
+
+1. A clear task definition and quality rubric
+2. Versioned prompts, models, tools, and retrieval configuration
+3. Typed outputs with validation and controlled failure states
+4. Timeouts, bounded retries, and safe fallbacks
+5. Permission checks around retrieval and every side effect
+6. Traces for model, retrieval, validation, and tool execution
+7. Offline regression tests built from representative examples
+8. Production feedback and failure review
+9. Token, latency, and cost budgets
+10. A documented path for changing models or providers
+
+This baseline is intentionally unglamorous. Reliable infrastructure usually is.
+
+## Reliability is the product
+
+Users do not care which provider generated a response. They care whether the product is fast, accurate, predictable, and available when they need it.
+
+The strongest AI systems treat models as replaceable components inside a carefully engineered product. They use probabilistic intelligence where it creates value and deterministic software where correctness, security, and control matter most.
+
+The API call starts the application. The infrastructure around it earns the user's trust.
