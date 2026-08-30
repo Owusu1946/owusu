@@ -77,7 +77,7 @@ export default function WelcomeModal({ trigger }: WelcomeModalProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="sticky top-0 right-0 cursor-pointer rounded-full bg-black p-2 text-white hover:bg-black/90 hover:text-white"
+                className="sticky top-0 right-0 cursor-pointer rounded-full bg-black p-2 text-white hover:bg-black/90 hover:text-white dark:bg-white dark:text-black dark:hover:bg-white/90"
                 onClick={() => setIsOpen(false)}
               >
                 <X className="h-6 w-6" />

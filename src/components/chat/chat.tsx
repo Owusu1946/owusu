@@ -130,6 +130,7 @@ const Chat = () => {
 
   const toggleTheme = () => {
     const nextDark = !dark;
+    document.documentElement.classList.toggle('dark', nextDark);
     document.documentElement.classList.toggle('portfolio-dark', nextDark);
     document.documentElement.style.colorScheme = nextDark ? 'dark' : 'light';
     localStorage.setItem('portfolio-theme', nextDark ? 'dark' : 'light');

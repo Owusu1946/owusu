@@ -56,7 +56,7 @@ export function Resume() {
 
             {/* Download indicator */}
             <motion.div
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-primary-foreground group-hover:bg-black/80"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-primary-foreground group-hover:bg-black/80 dark:bg-white dark:text-black dark:group-hover:bg-white/80"
               initial={{ scale: 1 }}
             >
               <Download className="h-5 w-5" />

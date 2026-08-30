@@ -56,7 +56,7 @@ const themeScript = `
 try {
   const savedTheme = localStorage.getItem('portfolio-theme');
   const isDark = savedTheme ? savedTheme === 'dark' : true;
-  document.documentElement.classList.remove('dark');
+  document.documentElement.classList.toggle('dark', isDark);
   document.documentElement.classList.toggle('portfolio-dark', isDark);
   document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
   
@@ -69,7 +69,7 @@ try {
   }
   meta.setAttribute('content', metaColor);
 } catch (_) {
-  document.documentElement.classList.remove('dark');
+  document.documentElement.classList.add('dark');
   document.documentElement.classList.add('portfolio-dark');
   document.documentElement.style.colorScheme = 'dark';
 }
