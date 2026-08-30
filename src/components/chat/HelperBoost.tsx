@@ -35,6 +35,7 @@ interface HelperBoostProps {
 
 const questions = {
   Me: 'Who are you? I want to know more about you.',
+  Fit: 'Can you analyze if you are a good fit for our engineering role?',
   Projects: 'What are your projects? What are you working on right now?',
   Skills: 'What are your skills? Give me a list of your soft and hard skills.',
   Fun: 'What are your hobbies? What music do you listen to or poems do you write?',
@@ -44,6 +45,7 @@ const questions = {
 
 const questionConfig = [
   { key: 'Me', color: '#329696', icon: Laugh },
+  { key: 'Fit', color: '#0171E3', icon: Sparkles },
   { key: 'Projects', color: '#3E9858', icon: BriefcaseBusiness },
   { key: 'Skills', color: '#856ED9', icon: Layers },
   { key: 'Fun', color: '#B95F9D', icon: PartyPopper },
@@ -52,6 +54,7 @@ const questionConfig = [
 
 // Helper drawer data
 const specialQuestions = [
+  'Can you analyze if you are a fit for our open role?',
   'What are your hobbies & creative interests?',
   'Who are you?',
   'Can I see your resume?',
@@ -62,6 +65,17 @@ const specialQuestions = [
 ];
 
 const questionsByCategory = [
+  {
+    id: 'job-fit',
+    name: 'Recruiter & Job Fit',
+    icon: Sparkles,
+    questions: [
+      'Can you analyze if you are a fit for our open role?',
+      'Are you open to full-time or contract roles?',
+      'Why should we hire you over other candidates?',
+      'What is your availability and location preference?',
+    ],
+  },
   {
     id: 'me',
     name: 'Me',

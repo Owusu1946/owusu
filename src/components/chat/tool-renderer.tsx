@@ -8,6 +8,7 @@ import Resume from '../resume';
 import Skills from '../skills';
 import Sports from '../sport';
 import { Hobbies } from '../hobbies';
+import { JobFitCard } from './JobFitCard';
 
 interface ToolRendererProps {
   toolInvocations: any[];
@@ -25,6 +26,13 @@ export default function ToolRenderer({
 
         // Return specialized components based on tool name
         switch (toolName) {
+          case 'getJobFit':
+            return (
+              <div key={toolCallId} className="w-full rounded-lg">
+                <JobFitCard data={tool.result || tool.args} />
+              </div>
+            );
+
           case 'getHobbies':
             return (
               <div key={toolCallId} className="w-full rounded-lg">
