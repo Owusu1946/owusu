@@ -45,6 +45,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  viewportFit: 'cover',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#090909' },
@@ -57,9 +58,20 @@ try {
   const isDark = savedTheme ? savedTheme === 'dark' : true;
   document.documentElement.classList.remove('dark');
   document.documentElement.classList.toggle('portfolio-dark', isDark);
+  document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+  
+  const metaColor = isDark ? '#090909' : '#ffffff';
+  let meta = document.querySelector('meta[name="theme-color"]');
+  if (!meta) {
+    meta = document.createElement('meta');
+    meta.setAttribute('name', 'theme-color');
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute('content', metaColor);
 } catch (_) {
   document.documentElement.classList.remove('dark');
   document.documentElement.classList.add('portfolio-dark');
+  document.documentElement.style.colorScheme = 'dark';
 }
 `;
 

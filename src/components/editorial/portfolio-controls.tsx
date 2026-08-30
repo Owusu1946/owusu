@@ -31,8 +31,15 @@ export function PortfolioControls() {
   const toggleTheme = () => {
     const nextDark = !dark;
     document.documentElement.classList.toggle('portfolio-dark', nextDark);
+    document.documentElement.style.colorScheme = nextDark ? 'dark' : 'light';
     localStorage.setItem('portfolio-theme', nextDark ? 'dark' : 'light');
     setDark(nextDark);
+
+    const metaColor = nextDark ? '#090909' : '#ffffff';
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', metaColor);
+    }
   };
 
   const enterAiMode = () => {
