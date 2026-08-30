@@ -38,6 +38,20 @@ export const metadata: Metadata = {
       'Full-Stack Engineer and AI/LLM Application Engineer building dependable digital products.',
     creator: '@Owusu1946',
   },
+  alternates: {
+    canonical: 'https://owusu-sigma.vercel.app',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -79,6 +93,38 @@ try {
 }
 `;
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Owusu Kenneth',
+  alternateName: 'Kenneth Owusu',
+  url: 'https://owusu-sigma.vercel.app',
+  jobTitle: 'Full-Stack & AI Application Engineer',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Accra',
+    addressCountry: 'GH',
+  },
+  sameAs: [
+    'https://github.com/Owusu1946',
+    'https://linkedin.com/in/okenneth',
+    'https://x.com/okenneth2255',
+    'https://instagram.com/okenneth2266',
+  ],
+  knowsAbout: [
+    'TypeScript',
+    'React',
+    'Next.js',
+    'Artificial Intelligence',
+    'Large Language Models',
+    'Full-Stack Web Development',
+    'React Native',
+    'FastAPI',
+    'Node.js',
+    'PostgreSQL',
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -86,6 +132,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <link rel="prefetch" href="/final_memojis_ios.mp4" as="video" type="video/mp4" />
       </head>
       <body>{children}</body>

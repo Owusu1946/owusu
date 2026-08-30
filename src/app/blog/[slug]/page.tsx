@@ -43,14 +43,28 @@ export async function generateMetadata({
 
   if (!post) return {};
 
+  const url = `https://owusu-sigma.vercel.app/blog/${slug}`;
+
   return {
-    title: post.title,
+    title: `${post.title} — Owusu Kenneth`,
     description: post.description,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       type: 'article',
+      url,
       title: post.title,
       description: post.description,
       publishedTime: post.date,
+      authors: ['Owusu Kenneth'],
+      siteName: 'Owusu Kenneth Portfolio',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+      creator: '@okenneth2255',
     },
   };
 }
@@ -61,8 +75,35 @@ export default async function PostPage({ params }: PostPageProps) {
 
   if (!post) notFound();
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://owusu-sigma.vercel.app/blog/${slug}`,
+    },
+    author: {
+      '@type': 'Person',
+      name: 'Owusu Kenneth',
+      url: 'https://owusu-sigma.vercel.app',
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'Owusu Kenneth',
+      url: 'https://owusu-sigma.vercel.app',
+    },
+  };
+
   return (
     <div className="portfolio-shell">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <main className="blog-main post-main">
         <Link className="blog-back-link" href="/blog">
           <span aria-hidden="true">&larr;</span> all posts

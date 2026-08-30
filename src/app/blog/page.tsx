@@ -5,9 +5,27 @@ import { formatPostDate, getAllPosts } from '@/lib/posts';
 export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
-  title: 'Blog',
+  title: 'Technical Journal & Notes',
   description:
-    'Notes from Owusu Kenneth on software engineering, product development, and applied AI.',
+    'Essays and systems-level notes from Owusu Kenneth on software architecture, agentic workflows, and production AI engineering.',
+  alternates: {
+    canonical: 'https://owusu-sigma.vercel.app/blog',
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://owusu-sigma.vercel.app/blog',
+    title: 'Technical Journal & Notes — Owusu Kenneth',
+    description:
+      'Essays and systems-level notes from Owusu Kenneth on software architecture, agentic workflows, and production AI engineering.',
+    siteName: 'Owusu Kenneth Portfolio',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Technical Journal & Notes — Owusu Kenneth',
+    description:
+      'Essays and systems-level notes from Owusu Kenneth on software architecture, agentic workflows, and production AI engineering.',
+    creator: '@okenneth2255',
+  },
 };
 
 export default function BlogPage() {

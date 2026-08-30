@@ -1,0 +1,33 @@
+# Owusu Kenneth — AI Portfolio & Engineering Studio
+
+> Production Full-Stack Engineer and AI/LLM Application Engineer based in Accra, Ghana.
+> Website: https://owusu-sigma.vercel.app
+> GitHub: https://github.com/Owusu1946/owusu
+
+## Profile Summary
+Owusu Kenneth builds production web and mobile applications with modern TypeScript stacks, pragmatic AI/LLM integrations, and a strong bias for clean interfaces, ultra-fast performance, and dependable distributed systems.
+
+## Primary Skills
+- **Frontend**: React 19, Next.js 15 (App Router), TypeScript, React Native (Expo), Tailwind CSS v4, Framer Motion, Radix UI.
+- **Backend & AI**: Node.js, Python, FastAPI, Django, Vercel AI SDK, OpenRouter, LangChain, PostgreSQL, Redis, MongoDB, Drizzle ORM.
+- **Cloud & DevOps**: Docker, Kubernetes, AWS, Google Cloud, CI/CD, Vercel.
+
+## Featured Projects
+- **Orin**: AI multi-agent workspace where specialized agents plan, build, test, secure, and optimize applications collaboratively.
+- **Docsage / Docsage v2**: Developer tooling turning repository metadata and codebase ASTs into clear, structured README documentation.
+- **eMart**: AI-powered multivendor ecommerce platform designed around scalable architecture and administrative ergonomics.
+- **React Native Auth Template**: Production-ready Expo and Supabase starter with biometric authentication and clean scaffolding.
+- **Google Meet Clone**: Low-latency WebRTC video conferencing system with presence tracking and WebSocket signaling.
+
+## Technical Blog Posts
+- [Modern AI Infrastructure Is More Than an API Call](https://owusu-sigma.vercel.app/blog/modern-ai-infrastructure): Systems-level guide to building reliable, observable, secure, and cost-efficient AI applications.
+- [The Shift from Simple RAG to Autonomous Agentic Workflows](https://owusu-sigma.vercel.app/blog/shift-to-agentic-workflows): Architecture guide on why semantic search is only the first step and how multi-agent loops plan, execute, and self-correct.
+- [TypeScript: The Ideal Language for LLM Orchestration](https://owusu-sigma.vercel.app/blog/typescript-llm-orchestration): Why static types, Zod schemas, and asynchronous event loops make TypeScript the perfect fit for AI agents.
+
+## Contact & Verified Channels
+- Email: owusukenneth77@gmail.com
+- WhatsApp: https://wa.me/233559182794
+- GitHub: https://github.com/Owusu1946
+- LinkedIn: https://linkedin.com/in/okenneth
+- X (Twitter): https://x.com/okenneth2255
+- Instagram: https://instagram.com/okenneth2266
