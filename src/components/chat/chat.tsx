@@ -18,6 +18,7 @@ import {
 import WelcomeModal from '@/components/welcome-modal';
 import { Info } from '@/components/ui/icons';
 import HelperBoost from './HelperBoost';
+import { MessageTracking } from '@/lib/message-tracking';
 
 // ClientOnly component for client-side rendering
 //@ts-ignore
@@ -123,6 +124,7 @@ const Chat = () => {
   const [autoSubmitted, setAutoSubmitted] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [isTalking, setIsTalking] = useState(false);
+  const [hasReachedLimit, setHasReachedLimit] = useState(false);
   const [composerExpanded, setComposerExpanded] = useState(false);
 
   const {
@@ -215,9 +217,21 @@ const Chat = () => {
 
   //@ts-ignore
   const submitQuery = (query) => {
+    if (MessageTracking.hasReachedLimit()) {
+      setHasReachedLimit(true);
+      toast.error("You've reached your limit of 5 messages.");
+      return;
+    }
+
     if (!query.trim() || isToolInProgress) return;
 
     setComposerExpanded(false);
+
+    MessageTracking.incrementMessageCount();
+    if (MessageTracking.hasReachedLimit()) {
+      setHasReachedLimit(true);
+    }
+
     setLoadingSubmit(true);
     append({
       role: 'user',
@@ -231,6 +245,10 @@ const Chat = () => {
       videoRef.current.muted = true;
       videoRef.current.playsInline = true;
       videoRef.current.pause();
+    }
+
+    if (MessageTracking.hasReachedLimit()) {
+      setHasReachedLimit(true);
     }
 
     if (initialQuery && !autoSubmitted) {
@@ -255,6 +273,12 @@ const Chat = () => {
   //@ts-ignore
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if (MessageTracking.hasReachedLimit()) {
+      setHasReachedLimit(true);
+      toast.error("You've reached your limit of 5 messages.");
+      return;
+    }
 
     if (!input.trim() || isToolInProgress) return;
     setComposerExpanded(false);
@@ -398,16 +422,20 @@ const Chat = () => {
           >
             <HelperBoost
               submitQuery={submitQuery}
-              expanded={composerExpanded}
+              hasReachedLimit={hasReachedLimit}
+              expanded={composerExpanded && !hasReachedLimit}
             />
             <ChatBottombar
-              input={input}
-              handleInputChange={handleInputChange}
+              input={
+                hasReachedLimit ? "You've reached your limit of 5 messages." : input
+              }
+              handleInputChange={hasReachedLimit ? () => {} : handleInputChange}
               handleSubmit={onSubmit}
               isLoading={isLoading}
               stop={handleStop}
-              isToolInProgress={isToolInProgress}
-              expanded={composerExpanded}
+              isToolInProgress={isToolInProgress || hasReachedLimit}
+              disabled={hasReachedLimit}
+              expanded={composerExpanded && !hasReachedLimit}
             />
           </motion.div>
         </div>
