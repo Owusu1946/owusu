@@ -13,6 +13,10 @@
 
 <br />
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FOwusu1946%2Fowusu&env=OPENROUTER_API_KEY,OPENROUTER_MODEL,OPENROUTER_SITE_URL,OPENROUTER_SITE_NAME,GITHUB_TOKEN&envDescription=API%20Keys%20and%20Configuration%20for%20OpenRouter%20AI%20Chat%20and%20GitHub%20Integration&envLink=https%3A%2F%2Fopenrouter.ai%2Fkeys)
+
+<br />
+
 > **Static portfolios are a monologue. This portfolio is an interactive conversation.**  
 > Powered by Next.js 15, streaming generative AI, and dynamic tool-calling UI widgets that adapt to every visitor in real time.
 
@@ -133,8 +137,6 @@ GITHUB_TOKEN=your_github_token_here
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
 ### 5. Build for production
 
 ```bash
@@ -143,6 +145,14 @@ pnpm start
 ```
 
 ---
+
+## ⚡ One-Click Deployment to Vercel
+
+Deploy your own live instance of this AI portfolio in under 2 minutes:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FOwusu1946%2Fowusu&env=OPENROUTER_API_KEY,OPENROUTER_MODEL,OPENROUTER_SITE_URL,OPENROUTER_SITE_NAME,GITHUB_TOKEN&envDescription=API%20Keys%20and%20Configuration%20for%20OpenRouter%20AI%20Chat%20and%20GitHub%20Integration&envLink=https%3A%2F%2Fopenrouter.ai%2Fkeys)
+
+The deploy flow automatically sets up environment variables (`OPENROUTER_API_KEY`, `OPENROUTER_MODEL`, `OPENROUTER_SITE_URL`, `GITHUB_TOKEN`) and pre-configures Next.js App Router static optimization.
 
 ## 👨‍💻 Author
 
