@@ -8,6 +8,7 @@ import {
   getAllPosts,
   getPostBySlug,
 } from '@/lib/posts';
+import { ShareButtons } from '@/components/blog/share-buttons';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -122,6 +123,12 @@ export default async function PostPage({ params }: PostPageProps) {
           <div className="post-content">
             <MDXRemote source={post.content} components={mdxComponents} />
           </div>
+
+          <ShareButtons
+            title={post.title}
+            slug={post.slug}
+            description={post.description}
+          />
         </article>
       </main>
     </div>
