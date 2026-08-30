@@ -52,7 +52,7 @@ export default function ChatBottombar({
       style={{ maxWidth: expanded ? '48rem' : '36rem' }}
     >
       <form onSubmit={handleSubmit} className="relative w-full md:px-4">
-        <div className="mx-auto flex items-center rounded-full border border-[#E5E5E9] bg-[#ECECF0] py-2 pr-2 pl-6">
+        <div className="mx-auto flex items-center rounded-full border border-[var(--chat-bottombar-border)] bg-[var(--chat-bottombar-bg)] py-2 pr-2 pl-6 transition-colors duration-150">
           <input
             type="text"
             value={input}
@@ -65,8 +65,8 @@ export default function ChatBottombar({
                   ? 'Tool is in progress...'
                   : 'Ask me anything'
             }
-            className={`text-md w-full border-none bg-transparent placeholder:text-gray-500 focus:outline-none ${
-              disabled ? 'text-muted-foreground font-medium' : 'text-black'
+            className={`text-md w-full border-none bg-transparent placeholder:text-[var(--chat-bottombar-placeholder)] focus:outline-none ${
+              disabled ? 'text-muted-foreground font-medium' : 'text-[var(--chat-bottombar-text)]'
             }`}
             disabled={isToolInProgress || isLoading || disabled}
           />

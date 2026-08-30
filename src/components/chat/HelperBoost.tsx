@@ -189,11 +189,11 @@ export default function HelperBoost({
                       disabled={hasReachedLimit}
                       className={`h-auto min-w-[100px] flex-shrink-0 rounded-xl border px-4 py-3 shadow-none backdrop-blur-sm transition-none ${
                         hasReachedLimit
-                          ? 'cursor-not-allowed border-gray-200 bg-gray-100 opacity-50'
-                          : 'border-border hover:bg-border/30 cursor-pointer bg-white/80 active:scale-95'
+                          ? 'cursor-not-allowed border-gray-200 bg-gray-100 opacity-50 dark:border-neutral-800 dark:bg-neutral-900'
+                          : 'border-[var(--portfolio-border)] hover:bg-[var(--portfolio-border)]/30 cursor-pointer bg-[var(--chat-card-bg)] text-[var(--portfolio-primary)] active:scale-95'
                       }`}
                     >
-                      <div className="flex items-center gap-3 text-gray-700">
+                      <div className="flex items-center gap-3">
                         <Icon size={18} strokeWidth={2} color={color} />
                         <span className="text-sm font-medium">{key}</span>
                       </div>
@@ -211,13 +211,13 @@ export default function HelperBoost({
                           <motion.div
                             className={`flex h-auto items-center space-x-1 rounded-xl border px-4 py-3 text-sm backdrop-blur-sm transition-all duration-200 ${
                               hasReachedLimit
-                                ? 'cursor-not-allowed border-gray-200 bg-gray-100 opacity-50'
-                                : 'hover:bg-border/30 cursor-pointer border-neutral-200 bg-white/80 dark:border-neutral-800 dark:bg-neutral-900'
+                                ? 'cursor-not-allowed border-gray-200 bg-gray-100 opacity-50 dark:border-neutral-800 dark:bg-neutral-900'
+                                : 'border-[var(--portfolio-border)] hover:bg-[var(--portfolio-border)]/30 cursor-pointer bg-[var(--chat-card-bg)] text-[var(--portfolio-primary)]'
                             }`}
                             whileHover={!hasReachedLimit ? { scale: 1 } : {}}
                             whileTap={!hasReachedLimit ? { scale: 0.98 } : {}}
                           >
-                            <div className="flex items-center gap-3 text-gray-700">
+                            <div className="flex items-center gap-3">
                               <CircleEllipsis
                                 className="h-[20px] w-[18px]"
                                 strokeWidth={2}
@@ -240,12 +240,12 @@ export default function HelperBoost({
         {/* Drawer Content */}
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 z-100 bg-black/60 backdrop-blur-xs" />
-          <Drawer.Content className="fixed right-0 bottom-0 left-0 z-100 mt-24 flex h-[80%] flex-col rounded-t-[10px] bg-gray-100 outline-none lg:h-[60%]">
-            <div className="flex-1 overflow-y-auto rounded-t-[10px] bg-white p-4">
+          <Drawer.Content className="fixed right-0 bottom-0 left-0 z-100 mt-24 flex h-[80%] flex-col rounded-t-[10px] bg-[var(--chat-drawer-bg)] outline-none lg:h-[60%]">
+            <div className="flex-1 overflow-y-auto rounded-t-[10px] bg-[var(--chat-drawer-bg)] p-4 text-[var(--chat-drawer-text)]">
               <div className="mx-auto max-w-md space-y-4">
                 <div
                   aria-hidden
-                  className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-gray-300"
+                  className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-[var(--portfolio-border)]"
                 />
                 <div className="mx-auto w-full max-w-md">
                   <div className="space-y-8 pb-16">
@@ -286,13 +286,13 @@ function CategorySection({
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2.5 px-1">
-        <Icon className="h-5 w-5" />
-        <Drawer.Title className="text-[22px] font-medium text-gray-900">
+        <Icon className="h-5 w-5 text-[var(--portfolio-primary)]" />
+        <Drawer.Title className="text-[22px] font-medium text-[var(--portfolio-primary)]">
           {name}
         </Drawer.Title>
       </div>
 
-      <Separator className="my-4" />
+      <Separator className="my-4 border-[var(--portfolio-border)]" />
 
       <div className="space-y-3">
         {questions.map((question, index) => (
@@ -325,17 +325,15 @@ function QuestionItem({ question, onClick, isSpecial }: QuestionItemProps) {
         'text-md px-6 py-4 text-left font-normal',
         'transition-all',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
-        isSpecial ? 'bg-black' : 'bg-[#F7F8F9]'
+        isSpecial
+          ? 'bg-black text-white dark:bg-neutral-900'
+          : 'bg-[var(--chat-drawer-item-bg)] text-[var(--chat-drawer-text)] hover:bg-[var(--chat-drawer-item-hover)]'
       )}
       onClick={onClick}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      whileHover={{
-        backgroundColor: isSpecial ? undefined : '#F0F0F2',
-      }}
       whileTap={{
         scale: 0.98,
-        backgroundColor: isSpecial ? undefined : '#E8E8EA',
       }}
     >
       <div className="flex items-center">

@@ -16,7 +16,7 @@ import {
   ChatBubbleMessage,
 } from '@/components/ui/chat/chat-bubble';
 import WelcomeModal from '@/components/welcome-modal';
-import { Info } from '@/components/ui/icons';
+import { Info, Moon, Sun } from '@/components/ui/icons';
 import HelperBoost from './HelperBoost';
 import { MessageTracking } from '@/lib/message-tracking';
 
@@ -126,6 +126,21 @@ const Chat = () => {
   const [isTalking, setIsTalking] = useState(false);
   const [hasReachedLimit, setHasReachedLimit] = useState(false);
   const [composerExpanded, setComposerExpanded] = useState(false);
+  const [dark, setDark] = useState(true);
+
+  const toggleTheme = () => {
+    const nextDark = !dark;
+    document.documentElement.classList.toggle('portfolio-dark', nextDark);
+    document.documentElement.style.colorScheme = nextDark ? 'dark' : 'light';
+    localStorage.setItem('portfolio-theme', nextDark ? 'dark' : 'light');
+    setDark(nextDark);
+
+    const metaColor = nextDark ? '#090909' : '#ffffff';
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', metaColor);
+    }
+  };
 
   const {
     messages,
@@ -247,6 +262,8 @@ const Chat = () => {
       videoRef.current.pause();
     }
 
+    setDark(document.documentElement.classList.contains('portfolio-dark'));
+
     if (MessageTracking.hasReachedLimit()) {
       setHasReachedLimit(true);
     }
@@ -306,12 +323,25 @@ const Chat = () => {
   const headerHeight = hasActiveTool ? 100 : 180;
 
   return (
-    <div className="relative h-screen overflow-hidden">
-      <div className="absolute top-6 right-8 z-51 flex flex-col-reverse items-center justify-center gap-1 md:flex-row">
+    <div className="relative h-screen overflow-hidden bg-[var(--portfolio-bg)] text-[var(--portfolio-primary)] transition-colors duration-200">
+      <div className="absolute top-6 right-8 z-51 flex items-center justify-center gap-2">
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="hover:bg-accent cursor-pointer rounded-2xl px-3 py-1.5 transition-colors"
+          aria-label={dark ? 'Use light theme' : 'Use dark theme'}
+          title={dark ? 'Use light theme' : 'Use dark theme'}
+        >
+          {dark ? (
+            <Sun className="text-accent-foreground h-7 w-7" />
+          ) : (
+            <Moon className="text-accent-foreground h-7 w-7" />
+          )}
+        </button>
         <WelcomeModal
           trigger={
             <div className="hover:bg-accent cursor-pointer rounded-2xl px-3 py-1.5">
-              <Info className="text-accent-foreground h-8" />
+              <Info className="text-accent-foreground h-7 w-7" />
             </div>
           }
         />
@@ -319,10 +349,10 @@ const Chat = () => {
 
       {/* Fixed Avatar Header with Gradient */}
       <div
-        className="fixed top-0 right-0 left-0 z-50"
+        className="fixed top-0 right-0 left-0 z-50 transition-colors duration-200"
         style={{
           background:
-            'linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 30%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%)',
+            'linear-gradient(to bottom, var(--chat-gradient-start) 0%, var(--chat-gradient-mid) 30%, var(--chat-gradient-sub) 50%, var(--chat-gradient-end) 100%)',
         }}
       >
         <div
@@ -404,7 +434,7 @@ const Chat = () => {
         </div>
 
         {/* Fixed Bottom Bar */}
-        <div className="sticky bottom-0 bg-white px-2 pt-3 md:px-0 md:pb-4">
+        <div className="sticky bottom-0 bg-[var(--portfolio-bg)] px-2 pt-3 md:px-0 md:pb-4 transition-colors duration-200">
           <motion.div
             layout
             className="relative flex flex-col items-center gap-3"

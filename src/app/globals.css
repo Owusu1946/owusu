@@ -179,6 +179,21 @@ pre {
   --portfolio-muted: #747474;
   --portfolio-border: #e3e3e3;
   --portfolio-accent: #1677ff;
+
+  --chat-header-bg-start: rgba(255, 255, 255, 1);
+  --chat-header-bg-mid: rgba(255, 255, 255, 0.95);
+  --chat-header-bg-sub: rgba(255, 255, 255, 0.8);
+  --chat-header-bg-end: rgba(255, 255, 255, 0);
+
+  --chat-bottombar-bg: #ECECF0;
+  --chat-bottombar-border: #E5E5E9;
+  --chat-bottombar-text: #000000;
+  --chat-bottombar-placeholder: #6b7280;
+
+  --chat-drawer-bg: #ffffff;
+  --chat-drawer-item-bg: #F7F8F9;
+  --chat-drawer-item-hover: #F0F0F2;
+  --chat-drawer-text: #111827;
 }
 
 html {
@@ -201,6 +216,22 @@ html.portfolio-dark body {
   --portfolio-muted: #777777;
   --portfolio-border: #292929;
   --portfolio-accent: #3b9cff;
+
+  --chat-header-bg-start: rgba(9, 9, 9, 1);
+  --chat-header-bg-mid: rgba(9, 9, 9, 0.95);
+  --chat-header-bg-sub: rgba(9, 9, 9, 0.8);
+  --chat-header-bg-end: rgba(9, 9, 9, 0);
+
+  --chat-bottombar-bg: #18181b;
+  --chat-bottombar-border: #27272a;
+  --chat-bottombar-text: #f4f4f5;
+  --chat-bottombar-placeholder: #a1a1aa;
+
+  --chat-drawer-bg: #141416;
+  --chat-drawer-item-bg: #1e1e22;
+  --chat-drawer-item-hover: #28282d;
+  --chat-drawer-text: #f9fafb;
+
   background-color: #090909;
   color-scheme: dark;
 }
