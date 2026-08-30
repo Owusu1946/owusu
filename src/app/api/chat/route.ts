@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     const openrouter = createOpenRouter({
       apiKey,
       headers: {
-        'HTTP-Referer': process.env.OPENROUTER_SITE_URL ?? 'http://localhost:3000',
+        'HTTP-Referer': process.env.OPENROUTER_SITE_URL ?? 'https://owusu-sigma.vercel.app',
         'X-Title': process.env.OPENROUTER_SITE_NAME ?? 'Owusu Kenneth Portfolio',
       },
     });

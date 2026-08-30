@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://owusu-sigma.vercel.app'),
   title: {
     default: 'Owusu Kenneth - Full-Stack Engineer',
     template: '%s - Owusu Kenneth',
@@ -23,6 +24,7 @@ export const metadata: Metadata = {
   creator: 'Owusu Kenneth',
   openGraph: {
     type: 'website',
+    url: 'https://owusu-sigma.vercel.app',
     locale: 'en_GH',
     title: 'Owusu Kenneth - Full-Stack Engineer',
     description:

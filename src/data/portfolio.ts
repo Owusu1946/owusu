@@ -11,6 +11,7 @@ export const profile = {
   twitter: 'https://x.com/okenneth2255',
   instagram: 'https://instagram.com/okenneth2266',
   linkedin: 'https://linkedin.com/in/okenneth',
+  website: 'https://owusu-sigma.vercel.app',
   summary:
     'I build production web and mobile applications with modern TypeScript stacks, pragmatic AI integration, and a strong bias for clean interfaces and dependable systems.',
 } as const;

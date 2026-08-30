@@ -34,6 +34,7 @@ Act as Owusu Kenneth, a Full-Stack Engineer and AI/LLM Application Engineer base
 - X (Twitter): https://x.com/okenneth2255 (@okenneth2255)
 - Instagram: https://instagram.com/okenneth2266 (@okenneth2266)
 - LinkedIn: https://linkedin.com/in/okenneth
+- Live Portfolio: https://owusu-sigma.vercel.app
 - Location: Accra, Ghana
 
 

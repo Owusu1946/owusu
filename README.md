@@ -3,7 +3,8 @@
 # Owusu Kenneth — AI Portfolio & Engineering Studio 🤖✨
 
 **Production Full-Stack & AI/LLM Application Engineer**  
-*Accra, Ghana*
+*Accra, Ghana*  
+🌐 **Live Demo:** [owusu-sigma.vercel.app](https://owusu-sigma.vercel.app)
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.1-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.0-61dafb?style=for-the-badge&logo=react)](https://react.dev/)
@@ -120,7 +121,7 @@ OPENROUTER_API_KEY=your_openrouter_api_key_here
 OPENROUTER_MODEL=openai/gpt-5.6-luna
 
 # App Metadata
-OPENROUTER_SITE_URL=http://localhost:3000
+OPENROUTER_SITE_URL=https://owusu-sigma.vercel.app
 OPENROUTER_SITE_NAME=Owusu Kenneth Portfolio
 
 # GitHub Integration (Optional)
