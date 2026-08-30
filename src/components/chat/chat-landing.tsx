@@ -7,17 +7,14 @@ import {
   Mail,
   MessageSquare,
 } from '@/components/ui/icons';
-import Link from 'next/link';
 import React from 'react';
 
 interface ChatLandingProps {
   submitQuery: (query: string) => void;
-  hasReachedLimit?: boolean;
 }
 
 const ChatLanding: React.FC<ChatLandingProps> = ({
   submitQuery,
-  hasReachedLimit = false,
 }) => {
   // Suggested questions that the user can click on
   const suggestedQuestions = [

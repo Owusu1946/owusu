@@ -29,7 +29,6 @@ import { Drawer } from 'vaul';
 
 interface HelperBoostProps {
   submitQuery?: (query: string) => void;
-  hasReachedLimit?: boolean;
   expanded?: boolean;
 }
 
@@ -145,7 +144,6 @@ const AnimatedChevron = () => {
 
 export default function HelperBoost({
   submitQuery,
-  hasReachedLimit = false,
   expanded = false,
 }: HelperBoostProps) {
   const [open, setOpen] = useState(false);
@@ -184,16 +182,9 @@ export default function HelperBoost({
                   {questionConfig.map(({ key, color, icon: Icon }) => (
                     <Button
                       key={key}
-                      onClick={() =>
-                        !hasReachedLimit && handleQuestionClick(key)
-                      }
+                      onClick={() => handleQuestionClick(key)}
                       variant="outline"
-                      className={`h-auto min-w-[100px] flex-shrink-0 rounded-xl border px-4 py-3 shadow-none backdrop-blur-sm transition-none ${
-                        hasReachedLimit
-                          ? 'cursor-not-allowed border-gray-200 bg-gray-100 opacity-50'
-                          : 'border-border hover:bg-border/30 cursor-pointer bg-white/80 active:scale-95'
-                      }`}
-                      disabled={hasReachedLimit}
+                      className="h-auto min-w-[100px] flex-shrink-0 rounded-xl border border-border hover:bg-border/30 cursor-pointer bg-white/80 active:scale-95 px-4 py-3 shadow-none backdrop-blur-sm transition-none"
                     >
                       <div className="flex items-center gap-3 text-gray-700">
                         <Icon size={18} strokeWidth={2} color={color} />
@@ -208,24 +199,17 @@ export default function HelperBoost({
                       <TooltipTrigger asChild>
                         <Drawer.Trigger
                           className="group relative flex flex-shrink-0 items-center justify-center"
-                          disabled={hasReachedLimit}
                         >
                           <motion.div
-                            className={`flex h-auto items-center space-x-1 rounded-xl border px-4 py-3 text-sm backdrop-blur-sm transition-all duration-200 ${
-                              hasReachedLimit
-                                ? 'cursor-not-allowed border-gray-200 bg-gray-100 opacity-50'
-                                : 'hover:bg-border/30 cursor-pointer border-neutral-200 bg-white/80 dark:border-neutral-800 dark:bg-neutral-900'
-                            }`}
-                            whileHover={!hasReachedLimit ? { scale: 1 } : {}}
-                            whileTap={!hasReachedLimit ? { scale: 0.98 } : {}}
+                            className="flex h-auto items-center space-x-1 rounded-xl border border-neutral-200 bg-white/80 hover:bg-border/30 cursor-pointer px-4 py-3 text-sm backdrop-blur-sm transition-all duration-200 dark:border-neutral-800 dark:bg-neutral-900"
+                            whileHover={{ scale: 1 }}
+                            whileTap={{ scale: 0.98 }}
                           >
                             <div className="flex items-center gap-3 text-gray-700">
                               <CircleEllipsis
                                 className="h-[20px] w-[18px]"
-                                //style={{ color: '#3B82F6' }}
                                 strokeWidth={2}
                               />
-                              {/*<span className="text-sm font-medium">More</span>*/}
                             </div>
                           </motion.div>
                         </Drawer.Trigger>
