@@ -364,6 +364,7 @@ html:not(.portfolio-dark) body {
 .project-row {
   display: grid;
   grid-template-columns: 9rem minmax(0, 1fr);
+  align-items: start;
   gap: 2rem;
   padding: 2.35rem 0;
   border-bottom: 1px solid var(--portfolio-border);
@@ -1121,12 +1122,17 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
 
   .project-row {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: 1rem;
   }
 
   .project-mark {
-    width: 100%;
-    max-width: 20rem;
+    width: 6.5rem;
+    max-width: 100%;
+  }
+
+  .project-title-row {
+    flex-wrap: wrap;
+    gap: 0.4rem;
   }
 
   .experience-list article {
@@ -1151,6 +1157,21 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-header h1 {
+    font-size: 2.35rem;
+  }
+
+  .project-row {
+    padding: 1.5rem 0;
+    gap: 0.85rem;
+  }
+
+  .project-mark {
+    width: 5.5rem;
   }
 }
 
