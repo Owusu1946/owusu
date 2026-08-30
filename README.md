@@ -24,6 +24,7 @@
 
 - 🤖 **Conversational AI Agent**: Real-time streaming conversational assistant powered by OpenRouter and Vercel AI SDK, with custom system prompts reflecting verified background and projects.
 - 🛠️ **Dynamic Tool-Calling UI Widgets**: The AI dynamically invokes interactive React components directly inside the conversation stream:
+  - `getJobFit`: Custom **Recruiter Job-Match & Fit Analysis** showing match scores, matched tech capabilities, project evidence, and fast action triggers (intro call email, resume downloader, clipboard copy).
   - `getProjects`: Interactive carousel showcasing featured systems (**Orin**, **Docsage**, **eMart**, **React Native Auth Template**, **Google Meet Clone**).
   - `getHobbies`: Multi-app interactive studio featuring a **Spotify-inspired player**, **Apple Notes-styled poetry reader**, and reading bookshelf.
   - `getSkills`: Categorized skills badges across Frontend, Backend, AI/LLMs, Cloud/DevOps, and Soft Skills.
@@ -31,8 +32,10 @@
   - `getResume`: Quick-view and PDF download launcher.
   - `getContact`: Direct communication channels.
 - 🎨 **Minimal Editorial Aesthetic**: Refined typography, smooth transitions, dark & light theme modes with adaptive contrast-aware SVG iconography (39 tech stack icons).
+- ⚡ **0ms Instant Mode Switching**: Zero-latency transitions powered by background idle prewarming (`requestIdleCallback`) and media pre-caching of `/final_memojis_ios.mp4` so AI Mode mounts instantly without white flashes.
 - 📝 **MDX Technical Journal**: Lightweight, high-performance MDX blog engine for systems-level architecture notes and AI engineering essays.
 - ⚡ **Ultra-Fast & Type-Safe**: Zero runtime bloat, strict TypeScript types, server-rendered App Router routes, and optimized static asset delivery.
+
 
 ---
 
