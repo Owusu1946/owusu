@@ -17,6 +17,8 @@ import {
 } from '@/components/ui/chat/chat-bubble';
 import WelcomeModal from '@/components/welcome-modal';
 import { Info, Moon, Sun } from '@/components/ui/icons';
+import { GithubButton } from '@/components/ui/github-button';
+import { profile } from '@/data/portfolio';
 import HelperBoost from './HelperBoost';
 import { MessageTracking } from '@/lib/message-tracking';
 
@@ -326,6 +328,14 @@ const Chat = () => {
   return (
     <div className="relative h-screen overflow-hidden bg-[var(--portfolio-bg)] text-[var(--portfolio-primary)] transition-colors duration-200">
       <div className="absolute top-6 right-8 z-51 flex items-center justify-center gap-2">
+        <GithubButton
+          repoUrl={profile.repo}
+          label="Star"
+          variant="outline"
+          size="sm"
+          roundStars={true}
+          className="hidden sm:inline-flex"
+        />
         <button
           type="button"
           onClick={toggleTheme}

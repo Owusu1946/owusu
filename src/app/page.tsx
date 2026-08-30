@@ -7,7 +7,17 @@ import {
   projects,
   stack,
 } from '@/data/portfolio';
-import { ArrowUpRight, FileText, Github, Mail } from '@/components/ui/icons';
+import {
+  ArrowUpRight,
+  FileText,
+  Github,
+  Instagram,
+  LinkedIn,
+  Mail,
+  WhatsApp,
+  XTwitter,
+} from '@/components/ui/icons';
+import { GithubButton } from '@/components/ui/github-button';
 import { formatPostDate, getAllPosts } from '@/lib/posts';
 
 function SectionHeading({
@@ -31,7 +41,7 @@ function SectionHeading({
 export default function Home() {
   const recentPosts = getAllPosts().slice(0, 2);
   const stackIndex = recentPosts.length > 0 ? '05' : '04';
-  const experienceIndex = recentPosts.length > 0 ? '04' : '03';
+  const experienceIndex = recentPosts.length > 0 ? '03' : '04';
 
   return (
     <div className="portfolio-shell">
@@ -46,16 +56,32 @@ export default function Home() {
           </p>
           <p className="intro">{profile.summary}</p>
           <nav className="quick-links" aria-label="Contact and documents">
-            <a href={profile.github} target="_blank" rel="noopener noreferrer">
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" title="GitHub">
               <Github aria-hidden="true" />
               GitHub
             </a>
-            <a href={`mailto:${profile.email}`}>
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn">
+              <LinkedIn aria-hidden="true" />
+              LinkedIn
+            </a>
+            <a href={profile.twitter} target="_blank" rel="noopener noreferrer" title="X (Twitter)">
+              <XTwitter aria-hidden="true" />
+              X
+            </a>
+            <a href={profile.instagram} target="_blank" rel="noopener noreferrer" title="Instagram">
+              <Instagram aria-hidden="true" />
+              Instagram
+            </a>
+            <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer" title="WhatsApp">
+              <WhatsApp aria-hidden="true" />
+              WhatsApp
+            </a>
+            <a href={`mailto:${profile.email}`} title="Email">
               <Mail aria-hidden="true" />
               Email
             </a>
             <a href="/blog">Blog</a>
-            <a href="/CV.pdf" target="_blank" rel="noopener noreferrer">
+            <a href="/CV.pdf" target="_blank" rel="noopener noreferrer" title="CV">
               <FileText aria-hidden="true" />
               CV
             </a>
@@ -181,20 +207,70 @@ export default function Home() {
           </ul>
         </section>
 
-        <footer className="portfolio-footer">
-          <span>
-            © {new Date().getFullYear()} {profile.shortName.toLowerCase()}
-          </span>
-          <div>
+        <footer className="portfolio-footer flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <span>
+              © {new Date().getFullYear()} {profile.shortName.toLowerCase()}
+            </span>
+            <span className="hidden sm:inline text-muted-foreground">•</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">Love this project?</span>
+              <GithubButton
+                repoUrl={profile.repo}
+                label="Star repo"
+                variant="outline"
+                size="sm"
+                roundStars={true}
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
             <a
               href={profile.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
+              title="GitHub"
             >
               <Github aria-hidden="true" />
             </a>
-            <a href={`mailto:${profile.email}`} aria-label="Email">
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              title="LinkedIn"
+            >
+              <LinkedIn aria-hidden="true" />
+            </a>
+            <a
+              href={profile.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X (Twitter)"
+              title="X (Twitter)"
+            >
+              <XTwitter aria-hidden="true" />
+            </a>
+            <a
+              href={profile.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              title="Instagram"
+            >
+              <Instagram aria-hidden="true" />
+            </a>
+            <a
+              href={profile.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              title="WhatsApp"
+            >
+              <WhatsApp aria-hidden="true" />
+            </a>
+            <a href={`mailto:${profile.email}`} aria-label="Email" title="Email">
               <Mail aria-hidden="true" />
             </a>
             <a
@@ -202,6 +278,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Open CV"
+              title="CV"
             >
               <ArrowUpRight aria-hidden="true" />
             </a>

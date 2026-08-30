@@ -5,7 +5,12 @@ export const profile = {
   location: 'Accra, Ghana',
   email: 'owusukenneth77@gmail.com',
   phone: '0559182794',
+  whatsapp: 'https://wa.me/233559182794',
   github: 'https://github.com/Owusu1946',
+  repo: 'https://github.com/Owusu1946/owusu',
+  twitter: 'https://x.com/okenneth2255',
+  instagram: 'https://instagram.com/okenneth2266',
+  linkedin: 'https://linkedin.com/in/okenneth',
   summary:
     'I build production web and mobile applications with modern TypeScript stacks, pragmatic AI integration, and a strong bias for clean interfaces and dependable systems.',
 } as const;

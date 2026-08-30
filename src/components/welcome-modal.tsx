@@ -13,6 +13,8 @@ import { X } from '@/components/ui/icons';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'; // Next.js router import
 import { useState } from 'react';
+import { GithubButton } from '@/components/ui/github-button';
+import { profile } from '@/data/portfolio';
 
 interface WelcomeModalProps {
   trigger?: React.ReactNode;
@@ -123,20 +125,30 @@ export default function WelcomeModal({ trigger }: WelcomeModalProps) {
             <div className="flex flex-col items-center px-8 pt-4 pb-0 md:pb-8">
               <Button
                 onClick={() => setIsOpen(false)}
-                className="h-auto rounded-full px-4 py-3"
+                className="h-auto rounded-full px-6 py-3 font-semibold"
                 size="sm"
               >
                 Start Chatting
               </Button>
-              <div
-                className="mt-6 flex cursor-pointer flex-wrap gap-1 text-center text-sm"
-                onClick={handleContactMe}
-              >
+              <div className="mt-6 flex flex-col items-center gap-2 text-center text-sm">
                 <p className="text-muted-foreground">
-                  If you love it, please share it! Feedback is always welcome.
+                  If you love this AI portfolio, please consider giving the repository a star! ⭐️
                 </p>
-                <div className="flex cursor-pointer items-center text-blue-500 hover:underline">
-                  Contact me.
+                <div className="flex items-center gap-3">
+                  <GithubButton
+                    repoUrl={profile.repo}
+                    label="Star on GitHub"
+                    variant="outline"
+                    size="sm"
+                    roundStars={true}
+                  />
+                  <button
+                    type="button"
+                    className="cursor-pointer text-xs text-blue-500 hover:underline"
+                    onClick={handleContactMe}
+                  >
+                    Contact me
+                  </button>
                 </div>
               </div>
             </div>

@@ -2,44 +2,42 @@
 
 import React from 'react';
 import { ChevronRight } from '@/components/ui/icons';
+import { GithubButton } from '@/components/ui/github-button';
+import { profile } from '@/data/portfolio';
 
 export function Contact() {
-  // Contact information
   const contactInfo = {
     name: 'Owusu Kenneth',
-    email: 'owusukenneth77@gmail.com',
+    email: profile.email,
     handle: '@Owusu1946',
     socials: [
-      {
-        name: 'GitHub',
-        url: 'https://github.com/Owusu1946',
-      },
-      {
-        name: 'Phone',
-        url: 'tel:0559182794',
-      },
+      { name: 'GitHub', url: profile.github },
+      { name: 'LinkedIn', url: profile.linkedin },
+      { name: 'X (Twitter)', url: profile.twitter },
+      { name: 'Instagram', url: profile.instagram },
+      { name: 'WhatsApp', url: profile.whatsapp },
+      { name: 'Phone', url: `tel:${profile.phone}` },
     ],
   };
 
-  // Function to handle opening links
   const openLink = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
-    <div className="mx-auto mt-8 w-full">
-      <div className="bg-accent w-full overflow-hidden rounded-3xl px-6 py-8 font-sans sm:px-10 md:px-16 md:py-12">
+    <div className="mx-auto mt-8 w-full font-sans">
+      <div className="bg-accent w-full overflow-hidden rounded-3xl px-6 py-8 sm:px-10 md:px-16 md:py-12">
         {/* Header Section */}
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-foreground text-3xl font-semibold md:text-4xl">
             Contacts
           </h2>
-          <span className="mt-2 sm:mt-0">
+          <span className="mt-2 text-sm text-muted-foreground sm:mt-0">
             {contactInfo.handle}
           </span>
         </div>
 
-        {/* Email Section */}
+        {/* Email & Callouts */}
         <div className="mt-8 flex flex-col md:mt-10">
           <div
             className="group mb-5 cursor-pointer"
@@ -54,17 +52,31 @@ export function Contact() {
           </div>
 
           {/* Social Links */}
-          <div className="flex flex-wrap gap-x-6 gap-y-5 sm:gap-x-8">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
             {contactInfo.socials.map((social) => (
               <button
                 key={social.name}
-                className="text-muted-foreground hover:text-foreground cursor-pointer text-sm transition-colors"
+                className="text-muted-foreground hover:text-foreground cursor-pointer text-sm font-medium transition-colors"
                 onClick={() => openLink(social.url)}
                 title={social.name}
               >
                 {social.name}
               </button>
             ))}
+          </div>
+
+          {/* Star Repo Prompt */}
+          <div className="mt-8 flex flex-col items-start gap-2 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs text-muted-foreground">
+              If you like this portfolio, please give the repo a star on GitHub! ⭐️
+            </p>
+            <GithubButton
+              repoUrl={profile.repo}
+              label="Star on GitHub"
+              variant="outline"
+              size="sm"
+              roundStars={true}
+            />
           </div>
         </div>
       </div>

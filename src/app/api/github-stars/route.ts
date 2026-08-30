@@ -7,10 +7,17 @@ export async function GET() {
       headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
     }
 
-    const res = await fetch('https://api.github.com/repos/Owusu1946/portfolio', {
+    let res = await fetch('https://api.github.com/repos/Owusu1946/owusu', {
       headers,
       next: { revalidate: 3600 },
     });
+
+    if (!res.ok) {
+      res = await fetch('https://api.github.com/repos/Owusu1946/portfolio', {
+        headers,
+        next: { revalidate: 3600 },
+      });
+    }
 
     if (!res.ok) {
       return Response.json({ stars: 0 });
