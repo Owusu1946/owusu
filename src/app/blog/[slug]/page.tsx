@@ -60,12 +60,22 @@ export async function generateMetadata({
       publishedTime: post.date,
       authors: ['Owusu Kenneth'],
       siteName: 'Owusu Kenneth Portfolio',
+      images: [
+        {
+          url: '/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'Owusu Kenneth, Full-Stack Engineer and AI application engineer',
+          type: 'image/jpeg',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
       creator: '@okenneth2255',
+      images: ['/og-image.jpg'],
     },
   };
 }

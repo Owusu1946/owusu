@@ -31,6 +31,15 @@ export const metadata: Metadata = {
     description:
       'Full-Stack Engineer and AI/LLM Application Engineer building dependable digital products.',
     siteName: 'Owusu Kenneth Portfolio',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Owusu Kenneth, Full-Stack Engineer and AI application engineer',
+        type: 'image/jpeg',
+      },
+    ],
   },
   twitter: {
     card: 'summary',
@@ -38,6 +47,7 @@ export const metadata: Metadata = {
     description:
       'Full-Stack Engineer and AI/LLM Application Engineer building dependable digital products.',
     creator: '@Owusu1946',
+    images: ['/og-image.jpg'],
   },
   alternates: {
     canonical: 'https://owusu-sigma.vercel.app',

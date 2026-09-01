@@ -18,6 +18,15 @@ export const metadata: Metadata = {
     description:
       'Essays and systems-level notes from Owusu Kenneth on software architecture, agentic workflows, and production AI engineering.',
     siteName: 'Owusu Kenneth Portfolio',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Owusu Kenneth, Full-Stack Engineer and AI application engineer',
+        type: 'image/jpeg',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -25,6 +34,7 @@ export const metadata: Metadata = {
     description:
       'Essays and systems-level notes from Owusu Kenneth on software architecture, agentic workflows, and production AI engineering.',
     creator: '@okenneth2255',
+    images: ['/og-image.jpg'],
   },
 };
 
