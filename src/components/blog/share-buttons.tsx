@@ -128,18 +128,16 @@ export function ShareButtons({ title, slug, description }: ShareButtonsProps) {
             )}
           </button>
 
-          {typeof navigator !== 'undefined' && 'share' in navigator && (
-            <button
-              type="button"
-              onClick={handleNativeShare}
-              className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-full border border-[var(--portfolio-border)] bg-[var(--portfolio-bg-soft)] px-3 text-xs font-medium text-[var(--portfolio-secondary)] transition-colors hover:border-[var(--portfolio-muted)] hover:text-[var(--portfolio-primary)] sm:hidden"
-              title="Native Share"
-              aria-label="Open mobile share sheet"
-            >
-              <ShareIcon className="h-3.5 w-3.5" />
-              <span>Share</span>
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={handleNativeShare}
+            className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-full border border-[var(--portfolio-border)] bg-[var(--portfolio-bg-soft)] px-3 text-xs font-medium text-[var(--portfolio-secondary)] transition-colors hover:border-[var(--portfolio-muted)] hover:text-[var(--portfolio-primary)] sm:hidden"
+            title="Native Share"
+            aria-label="Open mobile share sheet"
+          >
+            <ShareIcon className="h-3.5 w-3.5" />
+            <span>Share</span>
+          </button>
         </div>
       </div>
     </div>
