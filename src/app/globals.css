@@ -1503,6 +1503,7 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
   width: 9rem;
   color: var(--portfolio-primary);
   pointer-events: none;
+  overflow: visible;
   animation: mascot-enter 180ms ease-out both;
 }
 

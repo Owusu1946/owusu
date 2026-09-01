@@ -134,7 +134,7 @@ export function PortfolioControls() {
 
       {mascotActive && (
         <div className="dancing-mascot is-playing" aria-hidden="true">
-          <svg viewBox="0 0 160 190">
+          <svg viewBox="-14 -18 188 224">
             <ellipse className="mascot-shadow" cx="80" cy="178" rx="43" ry="7" />
             <g className="mascot-body">
               <g className="mascot-leg mascot-leg-left">
