@@ -38,11 +38,16 @@ export function PortfolioControls() {
     return () => {
       audioRef.current?.pause();
       audioRef.current = null;
+      document.documentElement.classList.remove('portfolio-music-playing');
     };
   }, []);
 
   useEffect(() => {
     const audio = audioRef.current;
+    document.documentElement.classList.toggle(
+      'portfolio-music-playing',
+      mascotActive && !isChat
+    );
     if (!audio || !mascotActive) return;
 
     if (isChat) {

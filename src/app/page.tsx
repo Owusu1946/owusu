@@ -164,6 +164,22 @@ export default async function Home() {
               CV
             </a>
           </nav>
+          <div className="now-playing" aria-label="Last played song">
+            <svg className="now-playing-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="11" fill="currentColor" />
+              <path d="M7.5 9.2c3.3-1 6.8-.5 9.5 1.3M8.3 12.1c2.7-.7 5.5-.3 7.7 1.1M9.2 14.8c2-.4 4.1-.1 5.8.8" fill="none" stroke="var(--portfolio-bg)" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            <span className="now-playing-wave" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+            <span className="now-playing-track">ENTI SE ADEE ANKYE MEA</span>
+            <span className="now-playing-separator" aria-hidden="true">&middot;</span>
+            <span className="now-playing-artist">Daddy Lumba</span>
+            <span className="now-playing-separator" aria-hidden="true">&middot;</span>
+            <span className="now-playing-status">last played</span>
+          </div>
         </header>
 
         <section aria-labelledby="interests-heading">

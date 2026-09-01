@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Custom SVG Icons for the Hobbies widget
@@ -100,8 +100,37 @@ const POEMS = [
 
 export function Hobbies() {
   const [activeTab, setActiveTab] = useState<TabType>('music');
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [selectedPoemIndex, setSelectedPoemIndex] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    return () => {
+      audioRef.current?.pause();
+      audioRef.current = null;
+    };
+  }, []);
+
+  const toggleMusic = async () => {
+    const audio = audioRef.current ?? new Audio('/mascot-music.mp3');
+    audioRef.current = audio;
+    audio.preload = 'none';
+    audio.volume = 0.5;
+    audio.onended = () => setIsPlaying(false);
+
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+      return;
+    }
+
+    try {
+      await audio.play();
+      setIsPlaying(true);
+    } catch {
+      setIsPlaying(false);
+    }
+  };
 
   const currentPoem = POEMS[selectedPoemIndex];
 
@@ -124,7 +153,7 @@ export function Hobbies() {
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex max-w-full items-center gap-1.5 overflow-x-auto rounded-full border border-border bg-secondary/50 p-1 backdrop-blur-md no-scrollbar">
+        <div className="hobbies-tabs flex max-w-full min-w-0 items-center gap-1.5 overflow-x-auto rounded-full border border-border bg-secondary/50 p-1 backdrop-blur-md no-scrollbar">
           <button
             type="button"
             onClick={() => setActiveTab('music')}
@@ -176,7 +205,7 @@ export function Hobbies() {
       </div>
 
       {/* Main interactive cards container */}
-      <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-lg">
+      <div className="relative w-full min-w-0 overflow-hidden rounded-3xl border border-border bg-card shadow-lg">
         <AnimatePresence mode="wait">
           {/* 1. MUSIC TAB (Spotify Inspired) */}
           {activeTab === 'music' && (
@@ -191,9 +220,7 @@ export function Hobbies() {
               <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-center">
                 {/* Left Vinyl Artwork Card */}
                 <div className="flex flex-col items-center justify-center md:col-span-5">
-                  <div className="relative flex aspect-square w-48 items-center justify-center rounded-2xl bg-gradient-to-br from-neutral-900 to-neutral-950 p-4 shadow-2xl ring-1 ring-white/10 sm:w-56">
-                    {/* Glowing subtle green ambient backdrop */}
-                    <div className="absolute -inset-1 rounded-2xl bg-[#1DB954]/20 blur-xl" />
+                  <div className="relative flex aspect-square w-44 items-center justify-center border border-border bg-secondary/20 p-4 sm:w-52">
 
                     {/* Rotating Vinyl Record */}
                     <motion.div
@@ -215,7 +242,7 @@ export function Hobbies() {
                     {/* Floating badge */}
                     <div className="absolute -bottom-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-[#1DB954] px-3 py-0.5 text-[11px] font-semibold text-black shadow-md">
                       <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-black" />
-                      Daily Rotation
+                      {isPlaying ? 'Playing' : 'Last played'}
                     </div>
                   </div>
                 </div>
@@ -225,20 +252,20 @@ export function Hobbies() {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-semibold tracking-wider uppercase text-[#1DB954]">
-                        Spotify Vibe
+                        Now playing
                       </span>
                       <span className="text-xs text-muted-foreground">• Deep Work &amp; Focus</span>
                     </div>
                     <h3 className="mt-1 text-2xl font-bold tracking-tight text-foreground">
-                      Late Night Syntax &amp; Afro-Fusion
+                      Enti Se Adee Ankye Me&apos;a
                     </h3>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Curated playlist by Owusu Kenneth for flow-state coding and thoughtful thinking.
+                      Daddy Lumba
                     </p>
                   </div>
 
                   {/* Equalizer Waveform Animation & Scrubber */}
-                  <div className="space-y-3 rounded-2xl bg-secondary/40 p-4 ring-1 ring-border">
+                  <div className="space-y-3 border-y border-border py-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
                         {/* 5 Equalizer bars */}
@@ -267,7 +294,7 @@ export function Hobbies() {
 
                       <button
                         type="button"
-                        onClick={() => setIsPlaying(!isPlaying)}
+                        onClick={toggleMusic}
                         className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1DB954] text-black shadow-sm transition-transform hover:scale-105 active:scale-95 cursor-pointer"
                         aria-label={isPlaying ? 'Pause' : 'Play'}
                       >
@@ -285,8 +312,8 @@ export function Hobbies() {
                         />
                       </div>
                       <div className="mt-1 flex justify-between text-[11px] text-muted-foreground font-mono">
-                        <span>01:42</span>
-                        <span>03:30</span>
+                        <span>{isPlaying ? 'playing' : 'ready'}</span>
+                        <span>05:28</span>
                       </div>
                     </div>
                   </div>

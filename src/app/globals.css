@@ -83,6 +83,22 @@
   --sidebar-ring: oklch(0.705 0.015 286.067);
 }
 
+/* Keep horizontally scrollable controls touch-friendly without exposing a native bar. */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.hobbies-tabs {
+  overscroll-behavior-inline: contain;
+}
+
 .dark {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
@@ -328,6 +344,89 @@ html:not(.portfolio-dark) body {
 .quick-links svg {
   width: 0.9rem;
   height: 0.9rem;
+}
+
+.now-playing {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.7rem;
+  overflow: hidden;
+  color: var(--portfolio-muted);
+  font-family: var(--font-system-mono);
+  font-size: 0.74rem;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.now-playing-mark {
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: none;
+  color: var(--portfolio-secondary);
+}
+
+.now-playing-wave {
+  display: inline-flex;
+  width: 1rem;
+  height: 1.15rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  opacity: 0;
+  transform: translateX(-0.2rem);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.now-playing-wave i {
+  display: block;
+  width: 2px;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--portfolio-accent);
+  transform: scaleY(0.55);
+  transform-origin: center;
+}
+
+.now-playing-wave i:nth-child(2) { height: 0.85rem; }
+.now-playing-wave i:nth-child(3) { height: 0.62rem; }
+
+html.portfolio-music-playing .now-playing-wave {
+  opacity: 1;
+  transform: none;
+}
+
+html.portfolio-music-playing .now-playing-wave i {
+  animation: now-playing-wave 720ms ease-in-out infinite alternate;
+}
+
+html.portfolio-music-playing .now-playing-wave i:nth-child(2) { animation-delay: 140ms; }
+html.portfolio-music-playing .now-playing-wave i:nth-child(3) { animation-delay: 280ms; }
+
+@keyframes now-playing-wave {
+  to { transform: scaleY(1); }
+}
+
+.now-playing-track,
+.now-playing-artist,
+.now-playing-status {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.now-playing-track {
+  color: var(--portfolio-secondary);
+}
+
+.now-playing-separator {
+  color: var(--portfolio-border);
+}
+
+.now-playing-status {
+  color: var(--portfolio-muted);
 }
 
 .portfolio-main > section {
