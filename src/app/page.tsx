@@ -174,11 +174,15 @@ export default async function Home() {
               <i />
               <i />
             </span>
-            <span className="now-playing-track">ENTI SE ADEE ANKYE MEA</span>
-            <span className="now-playing-separator" aria-hidden="true">&middot;</span>
-            <span className="now-playing-artist">Daddy Lumba</span>
-            <span className="now-playing-separator" aria-hidden="true">&middot;</span>
-            <span className="now-playing-status">last played</span>
+            <span className="now-playing-copy">
+              <span className="now-playing-track">ENTI SE ADEE ANKYE MEA</span>
+              <span className="now-playing-meta">
+                <span className="now-playing-separator" aria-hidden="true">&middot;</span>
+                <span className="now-playing-artist">Daddy Lumba</span>
+                <span className="now-playing-separator" aria-hidden="true">&middot;</span>
+                <span className="now-playing-status">last played</span>
+              </span>
+            </span>
           </div>
         </header>
 

@@ -67,6 +67,49 @@ export function PortfolioControls() {
   }, [menuOpen]);
 
   useEffect(() => {
+    if (CSS.supports('selector(:popover-open)')) return;
+
+    const closeFallbackPopover = () => {
+      const open = document.querySelector<HTMLElement>(
+        '.architecture-popover[data-fallback-open]'
+      );
+      open?.removeAttribute('data-fallback-open');
+      document.documentElement.classList.remove('architecture-fallback-open');
+    };
+
+    const onClick = (event: MouseEvent) => {
+      const trigger = (event.target as Element).closest<HTMLElement>(
+        '[popovertarget]'
+      );
+      if (!trigger) return;
+      const targetId = trigger.getAttribute('popovertarget');
+      if (!targetId) return;
+      const target = document.getElementById(targetId);
+      if (!target?.classList.contains('architecture-popover')) return;
+
+      event.preventDefault();
+      if (trigger.getAttribute('popovertargetaction') === 'hide') {
+        closeFallbackPopover();
+      } else {
+        target.setAttribute('data-fallback-open', '');
+        document.documentElement.classList.add('architecture-fallback-open');
+      }
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeFallbackPopover();
+    };
+
+    document.addEventListener('click', onClick);
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('click', onClick);
+      window.removeEventListener('keydown', onKeyDown);
+      closeFallbackPopover();
+    };
+  }, []);
+
+  useEffect(() => {
     setDark(
       document.documentElement.classList.contains('portfolio-dark') ||
         document.documentElement.classList.contains('dark')
