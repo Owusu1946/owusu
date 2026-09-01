@@ -25,6 +25,7 @@ export const interests = [
 
 export type Project = {
   title: string;
+  image: string;
   description: string;
   technologies: readonly string[];
   details: readonly string[];
@@ -42,6 +43,7 @@ export type Project = {
 export const projects: readonly Project[] = [
   {
     title: 'Orin',
+    image: '/projects/orin-preview.svg',
     mark: 'OR',
     status: 'private',
     description:
@@ -64,29 +66,32 @@ export const projects: readonly Project[] = [
     },
   },
   {
-    title: 'Docsage / Docsage v2',
+    title: 'DocSage v2',
+    image: '/projects/docsage-preview.svg',
     mark: 'DS',
+    status: 'public',
     description:
-      'Developer tooling that turns repository context and project metadata into clear, structured README documentation.',
-    technologies: ['TypeScript', 'LLMs', 'GitHub', 'Node.js'],
+      'An npm CLI that analyzes local codebases or public GitHub repositories, then generates clear README, contribution, and license documentation with AI.',
+    technologies: ['TypeScript', 'Node.js', 'npm', 'Express', 'GitHub', 'LLMs'],
     details: [
-      'Builds structured documentation from repository context instead of relying on generic prompt templates.',
-      'Prioritizes accurate project structure, setup instructions, and maintainable generated output.',
+      'Scans project structure, key files, and dependency relationships so generated documentation reflects the code that actually exists.',
+      'Ships as a global npm command with a REST endpoint for integrating documentation generation into developer workflows.',
     ],
     architecture: {
-      entry: { title: 'Repository', detail: 'Source tree, configuration, and metadata' },
-      core: { title: 'Context pipeline', detail: 'Selects and structures relevant project evidence' },
+      entry: { title: 'CLI or repository URL', detail: 'Local workspace or public GitHub source' },
+      core: { title: 'Documentation orchestrator', detail: 'Coordinates scanning, prompts, generation, and output' },
       services: [
-        { title: 'Code parser', detail: 'Extracts scripts, dependencies, and structure' },
-        { title: 'LLM writer', detail: 'Produces documentation from grounded context' },
-        { title: 'Content checks', detail: 'Validates sections, commands, and consistency' },
+        { title: 'Codebase scanner', detail: 'Maps files, key configuration, and dependencies' },
+        { title: 'Gemini generation', detail: 'Writes grounded README and contributor content' },
+        { title: 'CLI + REST API', detail: 'Exposes package commands and programmatic access' },
       ],
-      data: { title: 'Project model', detail: 'Normalized facts used across every section' },
-      output: { title: 'README', detail: 'Clear setup, architecture, and usage documentation' },
+      data: { title: 'Project context', detail: 'Normalized facts, prompts, and generation settings' },
+      output: { title: 'Documentation files', detail: 'README, CONTRIBUTING, and LICENSE output' },
     },
   },
   {
     title: 'eMart',
+    image: '/projects/emart-preview.svg',
     mark: 'EM',
     description:
       'An AI-powered multivendor ecommerce platform designed around scalable architecture and an efficient admin experience.',
@@ -109,6 +114,7 @@ export const projects: readonly Project[] = [
   },
   {
     title: 'React Native Auth Template',
+    image: '/projects/rn-auth-preview.svg',
     mark: 'RN',
     description:
       'A reusable Expo and Supabase starter with authentication scaffolding and a production-friendly project structure.',
@@ -130,7 +136,32 @@ export const projects: readonly Project[] = [
     },
   },
   {
+    title: 'Voltbase SDK',
+    image: '/projects/voltbase-preview.svg',
+    mark: 'VB',
+    status: 'public',
+    description:
+      'An official JavaScript and TypeScript SDK for querying Voltbase databases, managing auth, uploading files, and subscribing to realtime table changes.',
+    technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'WebSockets', 'npm'],
+    details: [
+      'Provides a typed, Supabase-style client surface for database queries, filters, inserts, updates, deletes, RPC, and pgvector search.',
+      'Combines browser and Node support with persisted sessions, storage buckets, OAuth, magic links, realtime channels, presence, and edge functions.',
+    ],
+    architecture: {
+      entry: { title: 'SDK client', detail: 'Project URL, API key, and typed builders' },
+      core: { title: 'Voltbase client', detail: 'Routes database, auth, storage, and realtime operations' },
+      services: [
+        { title: 'Database + RPC', detail: 'Queries, mutations, filters, and Postgres functions' },
+        { title: 'Auth + storage', detail: 'Sessions, OAuth, buckets, uploads, and signed URLs' },
+        { title: 'Realtime + functions', detail: 'Table events, channels, presence, and edge invocations' },
+      ],
+      data: { title: 'Project API', detail: 'Database records, JWT sessions, files, and event streams' },
+      output: { title: 'Application features', detail: 'Typed data access and realtime product workflows' },
+    },
+  },
+  {
     title: 'Google Meet Clone',
+    image: '/projects/google-meet-preview.svg',
     mark: 'GM',
     description:
       'A real-time communication project exploring modern browser media, presence, and low-latency interaction patterns.',

@@ -21,6 +21,85 @@ import {
 import { GithubActivity } from '@/components/editorial/github-activity';
 import { formatPostDate, getAllPosts } from '@/lib/posts';
 
+const technologyIcons: Record<string, string> = {
+  TypeScript: '/icons/typescript.svg',
+  'Next.js': '/icons/nextjs.svg',
+  'AI Agents': '/icons/bot.svg',
+  LLMs: '/icons/bot.svg',
+  AI: '/icons/bot.svg',
+  'Browser QA': '/icons/check.svg',
+  GitHub: '/icons/github-logo.svg',
+  'Node.js': '/icons/nodejs.svg',
+  npm: '/icons/npm.svg',
+  Express: '/icons/express.svg',
+  PostgreSQL: '/icons/postgresql.svg',
+  'React Native': '/icons/reactjs.svg',
+  React: '/icons/reactjs.svg',
+  Expo: '/icons/expo.svg',
+  Supabase: '/icons/supabase.svg',
+  WebRTC: '/icons/webrtc.svg',
+  WebSockets: '/icons/websocket.svg',
+};
+
+const stackGroupDefinitions = [
+  {
+    label: 'language',
+    names: ['TypeScript', 'Python'],
+  },
+  {
+    label: 'frontend',
+    names: [
+      'React',
+      'Next.js',
+      'React Native',
+      'Expo',
+      'Tailwind CSS',
+      'Astro',
+      'Vite',
+      'TanStack',
+      'TanStack Query',
+      'shadcn/ui',
+      'GSAP',
+    ],
+  },
+  {
+    label: 'data & services',
+    names: [
+      'Node.js',
+      'Django',
+      'FastAPI',
+      'Express',
+      'PostgreSQL',
+      'MongoDB',
+      'Redis',
+      'Drizzle ORM',
+      'tRPC',
+      'Convex',
+      'Clerk',
+      'Appwrite',
+      'Neon',
+      'LangChain',
+    ],
+  },
+  {
+    label: 'tooling & design',
+    names: [
+      'Docker',
+      'Kubernetes',
+      'AWS',
+      'Google Cloud',
+      'Turborepo',
+      'npm',
+      'pnpm',
+      'Figma',
+      'Canva',
+      'Photoshop',
+      'Illustrator',
+      'Zed',
+    ],
+  },
+] as const;
+
 function SectionHeading({
   id,
   index,
@@ -111,9 +190,15 @@ export default async function Home() {
           <div className="project-list dim-list">
             {projects.map((project) => (
               <article className="project-row" key={project.title}>
-                <div className="project-mark" aria-hidden="true">
-                  <span>{project.mark}</span>
-                  <i />
+                <div className="project-preview">
+                  <img
+                    src={project.image}
+                    alt={`${project.title} project preview`}
+                    width="800"
+                    height="450"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 <div className="project-copy">
                   <div className="project-title-row">
@@ -126,7 +211,18 @@ export default async function Home() {
                     aria-label={`${project.title} technologies`}
                   >
                     {project.technologies.map((technology) => (
-                      <li key={technology}>{technology}</li>
+                      <li key={technology} title={technology}>
+                        <img
+                          src={technologyIcons[technology] ?? '/icons/check.svg'}
+                          alt=""
+                          width="18"
+                          height="18"
+                          loading="lazy"
+                          decoding="async"
+                          aria-hidden="true"
+                        />
+                        <span className="sr-only">{technology}</span>
+                      </li>
                     ))}
                   </ul>
                   <button
@@ -284,30 +380,42 @@ export default async function Home() {
           <SectionHeading id="stack-heading" index={stackIndex}>
             what i work with
           </SectionHeading>
-          <ul className="stack-grid">
-            {stack.map((item) => (
-              <li
-                key={item.name}
-                style={{ '--stack-tone': item.tone } as React.CSSProperties}
-              >
-                {'icon' in item && item.icon ? (
-                  // These local SVGs are below the fold and should not compete with initial content.
-                  <img
-                    src={item.icon}
-                    alt=""
-                    width="34"
-                    height="34"
-                    loading="lazy"
-                    decoding="async"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <span aria-hidden="true">{(item as { mark?: string }).mark}</span>
-                )}
-                <small>{item.name}</small>
-              </li>
-            ))}
-          </ul>
+          <div className="stack-groups">
+            {stackGroupDefinitions.map((group) => {
+              const items = stack.filter((item) =>
+                (group.names as readonly string[]).includes(item.name)
+              );
+
+              return (
+                <div className="stack-group" key={group.label}>
+                  <h3>{group.label}</h3>
+                  <ul className="stack-grid">
+                    {items.map((item) => (
+                      <li
+                        key={item.name}
+                        style={{ '--stack-tone': item.tone } as React.CSSProperties}
+                      >
+                        {'icon' in item && item.icon ? (
+                          <img
+                            src={item.icon}
+                            alt=""
+                            width="22"
+                            height="22"
+                            loading="lazy"
+                            decoding="async"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <span aria-hidden="true">{(item as { mark?: string }).mark}</span>
+                        )}
+                        <small>{item.name}</small>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
         </section>
 
         <footer className="portfolio-footer flex-col md:flex-row gap-4 items-center justify-between">

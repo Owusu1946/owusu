@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+  <title id="title">Voltbase SDK</title>
+  <desc id="desc">Voltbase JavaScript and TypeScript SDK project preview.</desc>
+  <rect width="800" height="450" fill="#101419"/>
+  <path d="M0 350h800M0 100h800" stroke="#27313b"/>
+  <circle cx="400" cy="225" r="92" fill="#17212b" stroke="#3fcf8e" stroke-width="3"/>
+  <path d="m422 132-70 96h42l-16 90 70-108h-43z" fill="#3fcf8e"/>
+  <text x="400" y="370" fill="#d7e0e8" font-family="monospace" font-size="28" text-anchor="middle">voltbase-js</text>
+</svg>
