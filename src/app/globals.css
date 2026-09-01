@@ -1597,6 +1597,121 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
   height: 1rem;
 }
 
+.menu-toggle > span {
+  display: grid;
+  width: 1rem;
+  gap: 3px;
+}
+
+.menu-toggle > span i {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform-origin: center;
+  transition: transform 150ms ease, opacity 150ms ease;
+}
+
+.menu-toggle.is-open > span i:first-child { transform: translateY(4px) rotate(45deg); }
+.menu-toggle.is-open > span i:nth-child(2) { opacity: 0; }
+.menu-toggle.is-open > span i:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+.section-menu {
+  position: fixed;
+  top: 4.1rem;
+  right: 1rem;
+  z-index: 39;
+  display: flex;
+  width: min(18rem, calc(100vw - 2rem));
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.7rem;
+  border: 1px solid var(--portfolio-border);
+  background: color-mix(in srgb, var(--portfolio-bg) 94%, transparent);
+  box-shadow: 0 18px 45px color-mix(in srgb, var(--portfolio-primary) 10%, transparent);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.5rem) scale(0.98);
+  transform-origin: top right;
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.section-menu.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.section-menu-kicker {
+  padding: 0.3rem 0.65rem 0.5rem;
+  color: var(--portfolio-muted);
+  font-family: var(--font-system-mono);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.section-menu-count {
+  margin-top: auto;
+  padding: 1.5rem 0.65rem 0.3rem;
+  color: var(--portfolio-muted);
+  font-family: var(--font-system-mono);
+  font-size: 0.64rem;
+}
+
+.section-menu a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.52rem 0.65rem;
+  color: var(--portfolio-secondary);
+  font-family: var(--font-system-mono);
+  font-size: 0.72rem;
+  text-decoration: none;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.section-menu-link {
+  position: relative;
+}
+
+.section-menu-link::after {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.2rem;
+  left: 0.65rem;
+  height: 2px;
+  background: var(--portfolio-accent);
+  content: '';
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 180ms ease;
+}
+
+.section-menu-link:hover::after,
+.section-menu-link:focus-visible::after,
+.section-menu-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.section-menu-link.is-active {
+  color: var(--portfolio-primary);
+  font-weight: 700;
+}
+
+.section-menu a span {
+  width: 1.2rem;
+  color: var(--portfolio-accent);
+  font-size: 0.62rem;
+}
+
+.section-menu a:hover,
+.section-menu a:focus-visible {
+  background: var(--portfolio-bg-soft);
+  color: var(--portfolio-primary);
+}
+
 .mascot-toggle svg {
   width: 1rem;
   height: 1rem;
@@ -1919,6 +2034,62 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
 }
 
 @media (max-width: 720px) {
+  .section-menu {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    gap: 0.65rem;
+    padding: 6.5rem 1.25rem 1.5rem;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .section-menu-head {
+    margin-bottom: 0.7rem;
+  }
+
+  .section-menu-kicker {
+    display: inline-block;
+    padding: 0 0 0.25rem;
+    border-bottom: 2px solid var(--portfolio-accent);
+    color: var(--portfolio-primary);
+    font-family: var(--font-system-sans);
+    font-size: 1.45rem;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
+
+  .section-menu a {
+    gap: 0.9rem;
+    padding: 0.55rem 0;
+    font-family: var(--font-system-sans);
+    font-size: 1.15rem;
+  }
+
+  .section-menu-link.is-active {
+    font-size: 1.45rem;
+  }
+
+  .section-menu-link::after {
+    right: 0;
+    bottom: 0.2rem;
+    left: 0;
+  }
+
+  .section-menu a span {
+    width: 1.4rem;
+    font-family: var(--font-system-mono);
+    font-size: 0.65rem;
+  }
+
+  .section-menu-count {
+    padding: 1.5rem 0 0.3rem;
+  }
+
   .dancing-mascot {
     right: 0.65rem;
     bottom: 4rem;

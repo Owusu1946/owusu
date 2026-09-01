@@ -126,7 +126,7 @@ export default async function Home() {
   return (
     <div className="portfolio-shell">
       <main className="portfolio-main">
-        <header className="portfolio-header">
+        <header id="hero" className="portfolio-header">
           <p className="location">{profile.location}</p>
           <h1>{profile.name.toLowerCase()}</h1>
           <p className="role">

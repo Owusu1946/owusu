@@ -20,7 +20,51 @@ export function PortfolioControls() {
   const [dark, setDark] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [mascotActive, setMascotActive] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('index');
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const sectionIds = [
+      'hero',
+      'interests-heading',
+      'projects-heading',
+      'writing-heading',
+      'github-activity-heading',
+      'engineering-log-heading',
+      'experience-heading',
+      'stack-heading',
+    ];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { rootMargin: '-18% 0px -68% 0px', threshold: 0 }
+    );
+
+    sectionIds.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [menuOpen]);
 
   useEffect(() => {
     setDark(
@@ -101,6 +145,17 @@ export function PortfolioControls() {
       <div className="portfolio-controls" aria-label="Portfolio controls">
         <button
           type="button"
+          onClick={() => setMenuOpen((open) => !open)}
+          className={`icon-control menu-toggle ${menuOpen ? 'is-open' : ''}`}
+          aria-expanded={menuOpen}
+          aria-controls="portfolio-section-menu"
+          aria-label={menuOpen ? 'Close section menu' : 'Open section menu'}
+          title={menuOpen ? 'Close section menu' : 'Open section menu'}
+        >
+          <span aria-hidden="true"><i /><i /><i /></span>
+        </button>
+        <button
+          type="button"
           onClick={toggleMascot}
           className="icon-control mascot-toggle"
           aria-label={mascotActive ? 'Pause mascot and music' : 'Play mascot and music'}
@@ -136,6 +191,32 @@ export function PortfolioControls() {
           <LocalIcon src={dark ? '/icons/sun.svg' : '/icons/moon.svg'} />
         </button>
       </div>
+
+      <nav
+        id="portfolio-section-menu"
+        className={`section-menu ${menuOpen ? 'is-open' : ''}`}
+        aria-label="Jump to section"
+        aria-hidden={!menuOpen}
+        inert={!menuOpen}
+      >
+        <div className="section-menu-head">
+          <a
+            href="#hero"
+            className={`section-menu-link ${activeSection === 'hero' ? 'is-active' : ''}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            index
+          </a>
+        </div>
+        <a className={`section-menu-link ${activeSection === 'interests-heading' ? 'is-active' : ''}`} href="#interests-heading" onClick={() => setMenuOpen(false)}><span>01</span> what i like to do</a>
+        <a className={`section-menu-link ${activeSection === 'projects-heading' ? 'is-active' : ''}`} href="#projects-heading" onClick={() => setMenuOpen(false)}><span>02</span> selected work</a>
+        <a className={`section-menu-link ${activeSection === 'writing-heading' ? 'is-active' : ''}`} href="#writing-heading" onClick={() => setMenuOpen(false)}><span>03</span> recent writes</a>
+        <a className={`section-menu-link ${activeSection === 'github-activity-heading' ? 'is-active' : ''}`} href="#github-activity-heading" onClick={() => setMenuOpen(false)}><span>04</span> github activity</a>
+        <a className={`section-menu-link ${activeSection === 'engineering-log-heading' ? 'is-active' : ''}`} href="#engineering-log-heading" onClick={() => setMenuOpen(false)}><span>05</span> engineering log</a>
+        <a className={`section-menu-link ${activeSection === 'experience-heading' ? 'is-active' : ''}`} href="#experience-heading" onClick={() => setMenuOpen(false)}><span>06</span> experience</a>
+        <a className={`section-menu-link ${activeSection === 'stack-heading' ? 'is-active' : ''}`} href="#stack-heading" onClick={() => setMenuOpen(false)}><span>07</span> what i work with</a>
+        <span className="section-menu-count">01 / 08</span>
+      </nav>
 
       {mascotActive && (
         <div className="dancing-mascot is-playing" aria-hidden="true">
