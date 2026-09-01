@@ -64,9 +64,6 @@ export default function BlogPage() {
           <p className="blog-empty">No published notes yet.</p>
         )}
       </main>
-      <a className="blog-scroll-top" href="#blog-top" aria-label="Scroll to top">
-        <span aria-hidden="true" />
-      </a>
     </div>
   );
 }

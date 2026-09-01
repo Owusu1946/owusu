@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { type CSSProperties, useEffect, useRef, useState } from 'react';
 
 function LocalIcon({ src }: { src: string }) {
@@ -13,6 +15,8 @@ function LocalIcon({ src }: { src: string }) {
 }
 
 export function PortfolioControls() {
+  const pathname = usePathname();
+  const isChat = pathname.startsWith('/chat');
   const [dark, setDark] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [mascotActive, setMascotActive] = useState(false);
@@ -37,6 +41,18 @@ export function PortfolioControls() {
     };
   }, []);
 
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !mascotActive) return;
+
+    if (isChat) {
+      audio.pause();
+      return;
+    }
+
+    void audio.play().catch(() => {});
+  }, [isChat, mascotActive]);
+
   const toggleTheme = () => {
     const nextDark = !dark;
     document.documentElement.classList.toggle('dark', nextDark);
@@ -55,7 +71,6 @@ export function PortfolioControls() {
   const toggleMascot = async () => {
     if (mascotActive) {
       audioRef.current?.pause();
-      if (audioRef.current) audioRef.current.currentTime = 0;
       setMascotActive(false);
       return;
     }
@@ -73,6 +88,8 @@ export function PortfolioControls() {
       // Keep the mascot available until a music file is added.
     }
   };
+
+  if (isChat) return null;
 
   return (
     <>
@@ -95,14 +112,15 @@ export function PortfolioControls() {
             <LocalIcon src="/icons/play.svg" />
           )}
         </button>
-        <a
+        <Link
           href="/chat"
+          prefetch={false}
           className="mode-switch active:scale-95 transition-transform"
           aria-label="Switch to AI portfolio"
         >
           <LocalIcon src="/icons/bot.svg" />
           <span>AI mode</span>
-        </a>
+        </Link>
         <button
           type="button"
           onClick={toggleTheme}

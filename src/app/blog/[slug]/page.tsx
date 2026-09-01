@@ -168,9 +168,6 @@ export default async function PostPage({ params }: PostPageProps) {
         </article>
         <script dangerouslySetInnerHTML={{ __html: readCountScript }} />
       </main>
-      <a className="blog-scroll-top" href="#blog-top" aria-label="Scroll to top">
-        <span aria-hidden="true" />
-      </a>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { PortfolioControls } from '@/components/editorial/portfolio-controls';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -137,7 +138,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <PortfolioControls />
+        {children}
+      </body>
     </html>
   );
 }

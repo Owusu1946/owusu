@@ -1780,6 +1780,12 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
 }
 
 @media (max-width: 720px) {
+  .dancing-mascot {
+    right: 0.65rem;
+    bottom: 4rem;
+    width: 6.25rem;
+  }
+
   .portfolio-main {
     width: min(calc(100% - 2rem), 40rem);
     padding-bottom: 2rem;

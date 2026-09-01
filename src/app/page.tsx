@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { PortfolioControls } from '@/components/editorial/portfolio-controls';
 import Link from 'next/link';
 import {
   experience,
@@ -47,8 +46,6 @@ export default async function Home() {
 
   return (
     <div className="portfolio-shell">
-      <PortfolioControls />
-
       <main className="portfolio-main">
         <header className="portfolio-header">
           <p className="location">{profile.location}</p>
