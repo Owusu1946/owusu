@@ -8,7 +8,7 @@ import {
   useInView,
   type SpringOptions,
   type UseInViewOptions,
-} from 'motion/react';
+} from 'framer-motion';
 import React, { useCallback, useEffect, useState } from 'react';
 
 const githubButtonVariants = cva(

@@ -27,6 +27,14 @@ export type Project = {
   title: string;
   description: string;
   technologies: readonly string[];
+  details: readonly string[];
+  architecture: {
+    entry: { title: string; detail: string };
+    core: { title: string; detail: string };
+    services: readonly { title: string; detail: string }[];
+    data: { title: string; detail: string };
+    output: { title: string; detail: string };
+  };
   mark: string;
   status?: 'private' | 'public';
 };
@@ -39,6 +47,21 @@ export const projects: readonly Project[] = [
     description:
       'An AI multi-agent no-code workspace where specialized agents plan, build, test, secure, and optimize applications collaboratively.',
     technologies: ['TypeScript', 'Next.js', 'AI Agents', 'Browser QA'],
+    details: [
+      'Coordinates specialized planning, implementation, QA, security, and optimization agents.',
+      'Explores reliable code generation through browser-based verification and explicit agent handoffs.',
+    ],
+    architecture: {
+      entry: { title: 'Build brief', detail: 'Intent, constraints, and acceptance criteria' },
+      core: { title: 'Agent orchestrator', detail: 'Plans work and coordinates explicit handoffs' },
+      services: [
+        { title: 'Planning', detail: 'Architecture and task decomposition' },
+        { title: 'Implementation', detail: 'Code generation and workspace changes' },
+        { title: 'QA + security', detail: 'Browser checks, review, and verification' },
+      ],
+      data: { title: 'Workspace context', detail: 'Files, decisions, traces, and test evidence' },
+      output: { title: 'Verified app', detail: 'Reviewed, tested, and optimized delivery' },
+    },
   },
   {
     title: 'Docsage / Docsage v2',
@@ -46,6 +69,21 @@ export const projects: readonly Project[] = [
     description:
       'Developer tooling that turns repository context and project metadata into clear, structured README documentation.',
     technologies: ['TypeScript', 'LLMs', 'GitHub', 'Node.js'],
+    details: [
+      'Builds structured documentation from repository context instead of relying on generic prompt templates.',
+      'Prioritizes accurate project structure, setup instructions, and maintainable generated output.',
+    ],
+    architecture: {
+      entry: { title: 'Repository', detail: 'Source tree, configuration, and metadata' },
+      core: { title: 'Context pipeline', detail: 'Selects and structures relevant project evidence' },
+      services: [
+        { title: 'Code parser', detail: 'Extracts scripts, dependencies, and structure' },
+        { title: 'LLM writer', detail: 'Produces documentation from grounded context' },
+        { title: 'Content checks', detail: 'Validates sections, commands, and consistency' },
+      ],
+      data: { title: 'Project model', detail: 'Normalized facts used across every section' },
+      output: { title: 'README', detail: 'Clear setup, architecture, and usage documentation' },
+    },
   },
   {
     title: 'eMart',
@@ -53,6 +91,21 @@ export const projects: readonly Project[] = [
     description:
       'An AI-powered multivendor ecommerce platform designed around scalable architecture and an efficient admin experience.',
     technologies: ['Next.js', 'Node.js', 'PostgreSQL', 'AI'],
+    details: [
+      'Separates merchant, catalog, order, and administrative workflows around clear ownership boundaries.',
+      'Uses AI selectively where it improves discovery and operations without obscuring core commerce flows.',
+    ],
+    architecture: {
+      entry: { title: 'Buyer + merchant', detail: 'Storefront and operational workflows' },
+      core: { title: 'Commerce API', detail: 'Coordinates policies, identity, and transactions' },
+      services: [
+        { title: 'Catalog', detail: 'Products, inventory, search, and discovery' },
+        { title: 'Orders', detail: 'Checkout, payment state, and fulfillment' },
+        { title: 'Vendors', detail: 'Merchant tools, access, and administration' },
+      ],
+      data: { title: 'PostgreSQL', detail: 'Transactional commerce and operational records' },
+      output: { title: 'Commerce experience', detail: 'Responsive buying and efficient operations' },
+    },
   },
   {
     title: 'React Native Auth Template',
@@ -60,6 +113,21 @@ export const projects: readonly Project[] = [
     description:
       'A reusable Expo and Supabase starter with authentication scaffolding and a production-friendly project structure.',
     technologies: ['React Native', 'Expo', 'Supabase', 'TypeScript'],
+    details: [
+      'Provides reusable authentication and session foundations for Expo applications.',
+      'Keeps configuration and application structure suitable for extending beyond a demonstration project.',
+    ],
+    architecture: {
+      entry: { title: 'Mobile user', detail: 'Sign-in, recovery, and authenticated actions' },
+      core: { title: 'Expo app shell', detail: 'Owns routing, session state, and boundaries' },
+      services: [
+        { title: 'Authentication', detail: 'Sign-in, registration, and recovery flows' },
+        { title: 'Session guard', detail: 'Token lifecycle and protected navigation' },
+        { title: 'Feature modules', detail: 'Typed screens ready for product expansion' },
+      ],
+      data: { title: 'Supabase', detail: 'Identity, persisted user state, and backend access' },
+      output: { title: 'Production starter', detail: 'Reusable foundation for shipping mobile apps' },
+    },
   },
   {
     title: 'Google Meet Clone',
@@ -67,6 +135,39 @@ export const projects: readonly Project[] = [
     description:
       'A real-time communication project exploring modern browser media, presence, and low-latency interaction patterns.',
     technologies: ['React', 'WebRTC', 'WebSockets', 'Node.js'],
+    details: [
+      'Explores browser media capture, peer communication, room presence, and real-time state changes.',
+      'Focuses on predictable call controls and responsive feedback during connection changes.',
+    ],
+    architecture: {
+      entry: { title: 'Participant', detail: 'Camera, microphone, and call controls' },
+      core: { title: 'Session controller', detail: 'Coordinates room lifecycle and peer state' },
+      services: [
+        { title: 'Signaling', detail: 'WebSocket exchange for negotiation events' },
+        { title: 'Media plane', detail: 'WebRTC audio and video peer transport' },
+        { title: 'Presence', detail: 'Participants, device state, and room updates' },
+      ],
+      data: { title: 'Room state', detail: 'Shared session and connection metadata' },
+      output: { title: 'Live meeting', detail: 'Low-latency media with responsive controls' },
+    },
+  },
+] as const;
+
+export const engineeringLog = [
+  {
+    project: 'Orin',
+    status: 'building',
+    note: 'Reliable multi-agent planning, browser QA, and application delivery.',
+  },
+  {
+    project: 'OptiMediX',
+    status: 'developing',
+    note: 'AI-assisted healthcare workflows, telemedicine, and logistics.',
+  },
+  {
+    project: 'Portfolio',
+    status: 'optimizing',
+    note: 'Static-first delivery, minimal client JavaScript, and instant routes.',
   },
 ] as const;
 

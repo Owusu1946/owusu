@@ -136,7 +136,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <link rel="prefetch" href="/final_memojis_ios.mp4" as="video" type="video/mp4" />
       </head>
       <body>{children}</body>
     </html>

@@ -33,7 +33,7 @@ export default function BlogPage() {
 
   return (
     <div className="portfolio-shell">
-      <main className="blog-main">
+      <main className="blog-main" id="blog-top">
         <Link className="blog-back-link" href="/">
           <span aria-hidden="true">&larr;</span> home
         </Link>
@@ -64,6 +64,9 @@ export default function BlogPage() {
           <p className="blog-empty">No published notes yet.</p>
         )}
       </main>
+      <a className="blog-scroll-top" href="#blog-top" aria-label="Scroll to top">
+        <span aria-hidden="true" />
+      </a>
     </div>
   );
 }

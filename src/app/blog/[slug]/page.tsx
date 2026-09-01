@@ -99,13 +99,41 @@ export default async function PostPage({ params }: PostPageProps) {
     },
   };
 
+  const readCountScript = `
+(() => {
+  const counter = document.querySelector('[data-blog-read-count]');
+  if (!counter) return;
+
+  const loadReads = () => {
+    fetch('/api/blog-reads/${encodeURIComponent(slug)}', {
+      method: 'POST',
+      credentials: 'same-origin',
+      keepalive: true
+    })
+      .then((response) => response.ok ? response.json() : null)
+      .then((data) => {
+        if (!data || typeof data.reads !== 'number') return;
+        counter.textContent = data.reads.toLocaleString() + (data.reads === 1 ? ' read' : ' reads');
+      })
+      .catch(() => {});
+  };
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(loadReads, { timeout: 4000 });
+  } else {
+    window.setTimeout(loadReads, 1500);
+  }
+})();
+`;
+
   return (
     <div className="portfolio-shell">
+      <div className="reading-progress" aria-hidden="true" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      <main className="blog-main post-main">
+      <main className="blog-main post-main" id="blog-top">
         <Link className="blog-back-link" href="/blog">
           <span aria-hidden="true">&larr;</span> all posts
         </Link>
@@ -117,6 +145,14 @@ export default async function PostPage({ params }: PostPageProps) {
               <time dateTime={post.date}>{formatPostDate(post.date)}</time>
               <span aria-hidden="true">/</span>
               <span>{post.readingTime}</span>
+              <span aria-hidden="true">/</span>
+              <span
+                className="post-read-count"
+                data-blog-read-count
+                aria-live="polite"
+              >
+                &mdash; reads
+              </span>
             </div>
           </header>
 
@@ -130,7 +166,11 @@ export default async function PostPage({ params }: PostPageProps) {
             description={post.description}
           />
         </article>
+        <script dangerouslySetInnerHTML={{ __html: readCountScript }} />
       </main>
+      <a className="blog-scroll-top" href="#blog-top" aria-label="Scroll to top">
+        <span aria-hidden="true" />
+      </a>
     </div>
   );
 }

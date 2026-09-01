@@ -1,7 +1,9 @@
-/* eslint-disable @next/next/no-html-link-for-pages, @next/next/no-img-element */
+/* eslint-disable @next/next/no-img-element */
 import { PortfolioControls } from '@/components/editorial/portfolio-controls';
+import Link from 'next/link';
 import {
   experience,
+  engineeringLog,
   interests,
   profile,
   projects,
@@ -17,7 +19,7 @@ import {
   WhatsApp,
   XTwitter,
 } from '@/components/ui/icons';
-import { GithubButton } from '@/components/ui/github-button';
+import { GithubActivity } from '@/components/editorial/github-activity';
 import { formatPostDate, getAllPosts } from '@/lib/posts';
 
 function SectionHeading({
@@ -38,10 +40,10 @@ function SectionHeading({
   );
 }
 
-export default function Home() {
+export default async function Home() {
   const recentPosts = getAllPosts().slice(0, 2);
-  const stackIndex = recentPosts.length > 0 ? '05' : '04';
-  const experienceIndex = recentPosts.length > 0 ? '03' : '04';
+  const stackIndex = '07';
+  const experienceIndex = '06';
 
   return (
     <div className="portfolio-shell">
@@ -80,7 +82,7 @@ export default function Home() {
               <Mail aria-hidden="true" />
               Email
             </a>
-            <a href="/blog">Blog</a>
+            <Link href="/blog">Blog</Link>
             <a href="/CV.pdf" target="_blank" rel="noopener noreferrer" title="CV">
               <FileText aria-hidden="true" />
               CV
@@ -122,11 +124,96 @@ export default function Home() {
                     {project.status === 'private' && <span>private</span>}
                   </div>
                   <p>{project.description}</p>
-                  <ul aria-label={`${project.title} technologies`}>
+                  <ul
+                    className="project-technologies"
+                    aria-label={`${project.title} technologies`}
+                  >
                     {project.technologies.map((technology) => (
                       <li key={technology}>{technology}</li>
                     ))}
                   </ul>
+                  <button
+                    type="button"
+                    className="architecture-trigger"
+                    popoverTarget={`architecture-${project.mark.toLowerCase()}`}
+                  >
+                    see architecture
+                  </button>
+                  <aside
+                    id={`architecture-${project.mark.toLowerCase()}`}
+                    className="architecture-popover"
+                    popover="auto"
+                    role="dialog"
+                    aria-label={`${project.title} architecture`}
+                  >
+                    <header>
+                      <div>
+                        <span>exploded architecture</span>
+                        <h4>{project.title}</h4>
+                      </div>
+                      <button
+                        type="button"
+                        popoverTarget={`architecture-${project.mark.toLowerCase()}`}
+                        popoverTargetAction="hide"
+                        aria-label="Close architecture diagram"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </header>
+                    <div className="architecture-map" role="img" aria-label={`${project.title} system architecture`}>
+                      <svg className="architecture-connections" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
+                        <defs>
+                          <marker id={`architecture-arrow-${project.mark}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" />
+                          </marker>
+                        </defs>
+                        <g markerEnd={`url(#architecture-arrow-${project.mark})`}>
+                          <path d="M180 245H292" />
+                          <path d="M468 245H520V88H608" />
+                          <path d="M468 245H608" />
+                          <path d="M468 245H520V402H608" />
+                          <path d="M785 88H820V245H850" />
+                          <path d="M785 245H850" />
+                          <path d="M785 402H820V245H850" />
+                          <path d="M378 318V405H430" />
+                        </g>
+                        <path className="architecture-feedback" d="M922 318V462H535V446" markerEnd={`url(#architecture-arrow-${project.mark})`} />
+                      </svg>
+
+                      <div className="architecture-node architecture-entry">
+                        <span>01 / input</span>
+                        <strong>{project.architecture.entry.title}</strong>
+                        <small>{project.architecture.entry.detail}</small>
+                      </div>
+                      <div className="architecture-node architecture-core">
+                        <span>02 / orchestration</span>
+                        <strong>{project.architecture.core.title}</strong>
+                        <small>{project.architecture.core.detail}</small>
+                      </div>
+                      {project.architecture.services.map((service, index) => (
+                        <div className={`architecture-node architecture-service architecture-service-${index + 1}`} key={service.title}>
+                          <span>0{index + 3} / subsystem</span>
+                          <strong>{service.title}</strong>
+                          <small>{service.detail}</small>
+                        </div>
+                      ))}
+                      <div className="architecture-node architecture-data">
+                        <span>06 / shared state</span>
+                        <strong>{project.architecture.data.title}</strong>
+                        <small>{project.architecture.data.detail}</small>
+                      </div>
+                      <div className="architecture-node architecture-output">
+                        <span>07 / delivery</span>
+                        <strong>{project.architecture.output.title}</strong>
+                        <small>{project.architecture.output.detail}</small>
+                      </div>
+                    </div>
+                    <ul className="architecture-notes">
+                      {project.details.map((detail) => (
+                        <li key={detail}>{detail}</li>
+                      ))}
+                    </ul>
+                  </aside>
                 </div>
               </article>
             ))}
@@ -141,7 +228,7 @@ export default function Home() {
             <div className="home-blog-list blog-list">
               {recentPosts.map((post) => (
                 <article key={post.slug}>
-                  <a href={`/blog/${post.slug}`}>
+                  <Link href={`/blog/${post.slug}`}>
                     <div>
                       <h3>{post.title}</h3>
                       <p>{post.description}</p>
@@ -149,15 +236,34 @@ export default function Home() {
                     <time dateTime={post.date}>
                       {formatPostDate(post.date)}
                     </time>
-                  </a>
+                  </Link>
                 </article>
               ))}
-              <a className="view-all-posts" href="/blog">
+              <Link className="view-all-posts" href="/blog">
                 view all posts <span aria-hidden="true">&rarr;</span>
-              </a>
+              </Link>
             </div>
           </section>
         )}
+
+        <GithubActivity />
+
+        <section aria-labelledby="engineering-log-heading">
+          <SectionHeading id="engineering-log-heading" index="05">
+            engineering log
+          </SectionHeading>
+          <div className="engineering-log">
+            {engineeringLog.map((item) => (
+              <article key={item.project}>
+                <div>
+                  <h3>{item.project}</h3>
+                  <p>{item.note}</p>
+                </div>
+                <span>{item.status}</span>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <section aria-labelledby="experience-heading">
           <SectionHeading id="experience-heading" index={experienceIndex}>
@@ -215,13 +321,16 @@ export default function Home() {
             <span className="hidden sm:inline text-muted-foreground">•</span>
             <div className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground">Love this project?</span>
-              <GithubButton
-                repoUrl={profile.repo}
-                label="Star repo"
-                variant="outline"
-                size="sm"
-                roundStars={true}
-              />
+              <a
+                className="repo-star-link"
+                href={profile.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Star this portfolio repository on GitHub"
+              >
+                <Github aria-hidden="true" />
+                <span>Star repo</span>
+              </a>
             </div>
           </div>
           <div className="flex items-center gap-3">
