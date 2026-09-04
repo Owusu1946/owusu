@@ -260,6 +260,60 @@ html {
   color-scheme: dark;
 }
 
+html,
+body,
+.portfolio-shell,
+.portfolio-controls button,
+.portfolio-controls a {
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+html.theme-reveal::before {
+  position: fixed;
+  top: var(--theme-reveal-y);
+  left: var(--theme-reveal-x);
+  z-index: 80;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1px solid var(--theme-reveal-color);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: theme-reveal 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes theme-reveal {
+  0% { opacity: 0.95; transform: translate(-50%, -50%) scale(1); }
+  70% { opacity: 0.5; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(110); }
+}
+
+@supports not (transform: scale(2)) {
+  html.theme-reveal::before {
+    opacity: 0;
+    animation: theme-reveal-fade 420ms ease forwards;
+  }
+
+  @keyframes theme-reveal-fade {
+    100% { opacity: 0; }
+  }
+}
+
+.theme-toggle .local-icon,
+.theme-toggle svg {
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+html[data-theme-transition='true'] .theme-toggle .local-icon,
+html[data-theme-transition='true'] .theme-toggle svg {
+  transform: rotate(22deg) scale(0.84);
+  opacity: 0.65;
+}
+
 body {
   margin: 0;
   background-color: var(--portfolio-bg, #090909);

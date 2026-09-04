@@ -90,13 +90,17 @@ try {
   document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
   
   const metaColor = isDark ? '#090909' : '#ffffff';
-  let meta = document.querySelector('meta[name="theme-color"]');
-  if (!meta) {
-    meta = document.createElement('meta');
-    meta.setAttribute('name', 'theme-color');
-    document.head.appendChild(meta);
+  const themeMetas = document.querySelectorAll('meta[name="theme-color"]');
+  if (themeMetas.length) {
+    themeMetas.forEach((meta) => meta.setAttribute('content', metaColor));
   }
-  meta.setAttribute('content', metaColor);
+  let statusMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+  if (!statusMeta) {
+    statusMeta = document.createElement('meta');
+    statusMeta.setAttribute('name', 'apple-mobile-web-app-status-bar-style');
+    document.head.appendChild(statusMeta);
+  }
+  statusMeta.setAttribute('content', isDark ? 'black-translucent' : 'default');
 } catch (_) {
   document.documentElement.classList.add('dark');
   document.documentElement.classList.add('portfolio-dark');
@@ -142,6 +146,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"

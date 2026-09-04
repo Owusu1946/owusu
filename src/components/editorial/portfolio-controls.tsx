@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { type CSSProperties, useEffect, useRef, useState } from 'react';
+import { applyPortfolioTheme } from '@/lib/theme';
 
 function LocalIcon({ src }: { src: string }) {
   return (
@@ -147,17 +148,13 @@ export function PortfolioControls() {
 
   const toggleTheme = () => {
     const nextDark = !dark;
-    document.documentElement.classList.toggle('dark', nextDark);
-    document.documentElement.classList.toggle('portfolio-dark', nextDark);
-    document.documentElement.style.colorScheme = nextDark ? 'dark' : 'light';
+    const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+    const rect = button?.getBoundingClientRect();
+    applyPortfolioTheme(nextDark ? 'dark' : 'light', rect
+      ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+      : undefined);
     localStorage.setItem('portfolio-theme', nextDark ? 'dark' : 'light');
     setDark(nextDark);
-
-    const metaColor = nextDark ? '#090909' : '#ffffff';
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) {
-      meta.setAttribute('content', metaColor);
-    }
   };
 
   const toggleMascot = async () => {
@@ -227,7 +224,7 @@ export function PortfolioControls() {
         <button
           type="button"
           onClick={toggleTheme}
-          className="icon-control"
+          className="icon-control theme-toggle"
           aria-label={dark ? 'Use light theme' : 'Use dark theme'}
           title={dark ? 'Use light theme' : 'Use dark theme'}
         >

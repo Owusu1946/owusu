@@ -1,5 +1,6 @@
 'use client';
 import { useChat } from '@ai-sdk/react';
+import { applyPortfolioTheme } from '@/lib/theme';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -118,17 +119,13 @@ const Chat = () => {
 
   const toggleTheme = () => {
     const nextDark = !dark;
-    document.documentElement.classList.toggle('dark', nextDark);
-    document.documentElement.classList.toggle('portfolio-dark', nextDark);
-    document.documentElement.style.colorScheme = nextDark ? 'dark' : 'light';
+    const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+    const rect = button?.getBoundingClientRect();
+    applyPortfolioTheme(nextDark ? 'dark' : 'light', rect
+      ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+      : undefined);
     localStorage.setItem('portfolio-theme', nextDark ? 'dark' : 'light');
     setDark(nextDark);
-
-    const metaColor = nextDark ? '#090909' : '#ffffff';
-    let meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) {
-      meta.setAttribute('content', metaColor);
-    }
   };
 
   const {
@@ -325,7 +322,7 @@ const Chat = () => {
         <button
           type="button"
           onClick={toggleTheme}
-          className="hover:bg-accent cursor-pointer rounded-2xl px-3 py-1.5 transition-colors"
+          className="theme-toggle hover:bg-accent cursor-pointer rounded-2xl px-3 py-1.5 transition-colors"
           aria-label={dark ? 'Use light theme' : 'Use dark theme'}
           title={dark ? 'Use light theme' : 'Use dark theme'}
         >
