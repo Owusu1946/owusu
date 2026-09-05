@@ -9,7 +9,7 @@ type TimelineSection = {
 
 export function BlogReadingTimeline({ sections }: { sections: TimelineSection[] }) {
   useEffect(() => {
-    if (!sections.length) return;
+    if (!sections.length || window.matchMedia('(max-width: 720px)').matches) return;
 
     const markers = Array.from(document.querySelectorAll<HTMLElement>('[data-reading-marker]'));
     const headings = sections

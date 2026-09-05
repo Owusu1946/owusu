@@ -1352,9 +1352,7 @@ html:not(.portfolio-dark) .stack-grid img[src$='/nextjs.svg'] {
 
 @media (max-width: 720px) {
   .reading-progress {
-    left: 0.45rem;
-    width: 0.6rem;
-    height: 8rem;
+    display: none;
   }
 
   .reading-progress button {
