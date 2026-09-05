@@ -12,6 +12,11 @@ type PostFrontmatter = {
   description?: unknown;
   date?: unknown;
   published?: unknown;
+  category?: unknown;
+  status?: unknown;
+  keyIdea?: unknown;
+  updated?: unknown;
+  relatedProject?: unknown;
 };
 
 export type PostSummary = {
@@ -20,6 +25,11 @@ export type PostSummary = {
   description: string;
   date: string;
   readingTime: string;
+  category: string;
+  status: string;
+  keyIdea: string;
+  updated?: string;
+  relatedProject?: string;
 };
 
 export type Post = PostSummary & {
@@ -53,6 +63,11 @@ function parsePost(fileName: string): Post | null {
     description: frontmatter.description,
     date: frontmatter.date,
     readingTime: readingTime(content).text,
+    category: typeof frontmatter.category === 'string' ? frontmatter.category : 'engineering',
+    status: typeof frontmatter.status === 'string' ? frontmatter.status : 'field note',
+    keyIdea: typeof frontmatter.keyIdea === 'string' ? frontmatter.keyIdea : frontmatter.description as string,
+    updated: typeof frontmatter.updated === 'string' ? frontmatter.updated : undefined,
+    relatedProject: typeof frontmatter.relatedProject === 'string' ? frontmatter.relatedProject : undefined,
     content,
   };
 }
@@ -80,6 +95,11 @@ export function getAllPosts(): PostSummary[] {
     description: post.description,
     date: post.date,
     readingTime: post.readingTime,
+    category: post.category,
+    status: post.status,
+    keyIdea: post.keyIdea,
+    updated: post.updated,
+    relatedProject: post.relatedProject,
   }));
 }
 

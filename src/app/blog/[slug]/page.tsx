@@ -10,6 +10,9 @@ import {
 } from '@/lib/posts';
 import { ShareButtons } from '@/components/blog/share-buttons';
 import { getBlogReadCount } from '@/lib/blog-reads';
+import { projects } from '@/data/portfolio';
+import { PostNeighborNav } from '@/components/blog/post-neighbor-nav';
+import { BlogReadingTimeline } from '@/components/blog/blog-reading-timeline';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -31,7 +34,25 @@ const mdxComponents = {
       />
     );
   },
+  h2: ({ children, ...props }: ComponentPropsWithoutRef<'h2'>) => {
+    const title = typeof children === 'string' ? children : '';
+    return <h2 {...props} id={headingId(title)}>{children}</h2>;
+  },
 };
+
+const projectLinks: Record<string, string> = {
+  orin: 'Orin',
+  docsage: 'DocSage v2',
+  voltbase: 'Voltbase SDK',
+};
+
+function headingId(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[`*_]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
 
 export function generateStaticParams() {
   return getAllPosts().map(({ slug }) => ({ slug }));
@@ -88,6 +109,16 @@ export default async function PostPage({ params }: PostPageProps) {
   if (!post) notFound();
 
   const initialReadCount = await getBlogReadCount(slug);
+  const posts = getAllPosts();
+  const postIndex = posts.findIndex((item) => item.slug === slug);
+  const previousPost = postIndex < posts.length - 1 ? posts[postIndex + 1] : undefined;
+  const nextPost = postIndex > 0 ? posts[postIndex - 1] : undefined;
+  const relatedTitle = post.relatedProject ? projectLinks[post.relatedProject] : undefined;
+  const relatedProject = relatedTitle ? projects.find((project) => project.title === relatedTitle) : undefined;
+  const sections = Array.from(post.content.matchAll(/^##\s+(.+)$/gm)).map((match) => ({
+    title: match[1].trim(),
+    id: headingId(match[1].trim()),
+  }));
 
   const articleJsonLd = {
     '@context': 'https://schema.org',
@@ -137,7 +168,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <div className="portfolio-shell">
-      <div className="reading-progress" aria-hidden="true" />
+      <BlogReadingTimeline sections={sections} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -155,6 +186,11 @@ export default async function PostPage({ params }: PostPageProps) {
               <span aria-hidden="true">/</span>
               <span>{post.readingTime}</span>
               <span aria-hidden="true">/</span>
+              <span>{post.category}</span>
+              <span aria-hidden="true">/</span>
+              <span>{post.status}</span>
+              {post.updated && <><span aria-hidden="true">/</span><span>updated {formatPostDate(post.updated)}</span></>}
+              <span aria-hidden="true">/</span>
               <span
                 className="post-read-count"
                 data-blog-read-count
@@ -167,14 +203,48 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
           </header>
 
+          <aside className="post-key-idea">
+            <span>key idea</span>
+            <p>{post.keyIdea}</p>
+          </aside>
+
           <div className="post-content">
             <MDXRemote source={post.content} components={mdxComponents} />
           </div>
+
+          {relatedProject && (
+            <details className="post-architecture-callout">
+              <summary>view {relatedProject.title} architecture</summary>
+              <div>
+                <p><strong>{relatedProject.architecture.entry.title}</strong> &rarr; <strong>{relatedProject.architecture.core.title}</strong></p>
+                <p>{relatedProject.architecture.core.detail}</p>
+                <ul>
+                  {relatedProject.architecture.services.map((service) => (
+                    <li key={service.title}><strong>{service.title}</strong> &mdash; {service.detail}</li>
+                  ))}
+                </ul>
+                <p><strong>{relatedProject.architecture.output.title}</strong> &mdash; {relatedProject.architecture.output.detail}</p>
+              </div>
+            </details>
+          )}
 
           <ShareButtons
             title={post.title}
             slug={post.slug}
             description={post.description}
+          />
+
+          {relatedProject && (
+            <aside className="post-related-project">
+              <span>related work</span>
+              <strong>{relatedProject.title}</strong>
+              <p>{relatedProject.description}</p>
+            </aside>
+          )}
+
+          <PostNeighborNav
+            previous={previousPost ? { href: `/blog/${previousPost.slug}`, label: 'previous', title: previousPost.title } : undefined}
+            next={nextPost ? { href: `/blog/${nextPost.slug}`, label: 'next', title: nextPost.title } : undefined}
           />
         </article>
         <script dangerouslySetInnerHTML={{ __html: readCountScript }} />
