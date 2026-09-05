@@ -9,6 +9,7 @@ import {
   getPostBySlug,
 } from '@/lib/posts';
 import { ShareButtons } from '@/components/blog/share-buttons';
+import { getBlogReadCount } from '@/lib/blog-reads';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -86,6 +87,8 @@ export default async function PostPage({ params }: PostPageProps) {
 
   if (!post) notFound();
 
+  const initialReadCount = await getBlogReadCount(slug);
+
   const articleJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -128,11 +131,7 @@ export default async function PostPage({ params }: PostPageProps) {
       .catch(() => {});
   };
 
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(loadReads, { timeout: 4000 });
-  } else {
-    window.setTimeout(loadReads, 1500);
-  }
+  loadReads();
 })();
 `;
 
@@ -161,7 +160,9 @@ export default async function PostPage({ params }: PostPageProps) {
                 data-blog-read-count
                 aria-live="polite"
               >
-                &mdash; reads
+                {typeof initialReadCount === 'number'
+                  ? `${initialReadCount.toLocaleString()} ${initialReadCount === 1 ? 'read' : 'reads'}`
+                  : '— reads'}
               </span>
             </div>
           </header>
